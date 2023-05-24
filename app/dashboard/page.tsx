@@ -1,4 +1,5 @@
 import { UserButton } from "@clerk/nextjs";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -9,14 +10,18 @@ export default function Home() {
         <div className="bg-black w-24 rounded-full h-9" />
         <div className="space-x-3 flex items-center">
           <div className="bg-black w-9 rounded-full h-9" />
-          <div className="space-x-1 flex items-center">
-            <div>{"<"}</div>
-            <div>May</div>
-            <div>{">"}</div>
+          <div className="space-x-0.5 flex w-36 justify-end  items-center">
+            <button className="p-1 rounded-full hover:bg-neutral-800">
+              <ChevronLeft className="w-5 h-5 -translate-x-[1px]" />
+            </button>
+            <div>September</div>
+            <button className="p-1 rounded-full hover:bg-neutral-800">
+              <ChevronRight className="w-5 h-5 translate-x-[1px]" />
+            </button>
           </div>
         </div>
       </div>
-      <div className="mt-4 w-full flex-grow relative overflow-hidden flex flex-col gap-[1px] bg-neutral-800 p-[1px] rounded-md">
+      <div className="mt-4 w-full flex-grow relative overflow-hidden flex flex-col min-h-[600px] gap-[1px] bg-neutral-800 p-[1px] rounded-xl">
         <div className="w-full gap-[1px] grid grid-cols-7 mb-[1px]">
           {weekDays.map((day, i) => (
             <div
@@ -33,13 +38,13 @@ export default function Home() {
               1
             </div>
             <div className="w-full space-y-0.5">
-              <div className="w-full rounded-md px-1.5 py-1 bg-neutral-800 text-xs">
+              <div className="w-full rounded px-1 py-0.5 bg-neutral-900 text-xs">
                 event
               </div>
-              <div className="w-full rounded-md px-1.5 py-1 bg-neutral-800 text-xs">
+              <div className="w-full rounded px-1 py-0.5 bg-neutral-900 text-xs">
                 event
               </div>
-              <div className="w-full rounded-md px-1.5 py-1 text-neutral-400 bg-neutral-800 text-xs">
+              <div className="w-full rounded px-1 py-0.5 text-neutral-400 bg-neutral-900 text-xs">
                 + _ more
               </div>
             </div>
