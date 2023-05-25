@@ -1,3 +1,4 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserButton } from "@clerk/nextjs";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -7,7 +8,16 @@ export default function Home() {
   return (
     <div className="w-screen p-8 bg-neutral-900 flex-grow flex flex-col">
       <div className="flex w-full justify-between items-center">
-        <div className="bg-black w-24 rounded-full h-9" />
+        <Tabs defaultValue="account" className="w-[400px]">
+          <TabsList>
+            <TabsTrigger value="account">Account</TabsTrigger>
+            <TabsTrigger value="password">Password</TabsTrigger>
+          </TabsList>
+          <TabsContent value="account">
+            Make changes to your account here.
+          </TabsContent>
+          <TabsContent value="password">Change your password here.</TabsContent>
+        </Tabs>
         <div className="space-x-3 flex items-center">
           <div className="bg-black w-9 rounded-full h-9" />
           <div className="space-x-0.5 flex w-36 justify-end  items-center">
