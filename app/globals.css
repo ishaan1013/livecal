@@ -5,9 +5,10 @@
 html,
 body {
   overflow-x: hidden;
+  color-scheme: dark;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 15px;
 }
 
@@ -17,7 +18,7 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #525252;
-}
+} */
 
 @layer base {
   :root {
@@ -54,11 +55,11 @@ body {
   }
 
   .dark {
-    --background: 224 0% 4%;
+    --background: 224 0% 0%;
     --foreground: 213 0% 91%;
 
-    --muted: 223 0% 11%;
-    --muted-foreground: 215.4 0% 56.9%;
+    --muted: 223 0% 8%;
+    --muted-foreground: 215.4 0% 45%;
 
     --popover: 224 0% 4%;
     --popover-foreground: 215 0% 65.1%;
@@ -72,11 +73,11 @@ body {
     --primary: 210 0% 98%;
     --primary-foreground: 222.2 0% 1.2%;
 
-    --secondary: 222.2 0% 11.2%;
+    --secondary: 222.2 0% 8%;
     --secondary-foreground: 210 0% 98%;
 
-    --accent: 216 0% 17%;
-    --accent-foreground: 210 0% 98%;
+    --accent: 216 0% 14%;
+    --accent-foreground: 210 0% 60%;
 
     --destructive: 0 0% 31%;
     --destructive-foreground: 210 0% 98%;

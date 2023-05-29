@@ -1,3 +1,4 @@
+import ViewSwitch from "@/components/header/viewSwitch";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import { ReactNode } from "react";
 
@@ -12,7 +13,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <OrganizationSwitcher />
           </div>
         </div>
-        <UserButton />
+        <div className="flex items-center space-x-4">
+          <ViewSwitch />
+          <UserButton />
+        </div>
       </div>
       {children}
     </main>

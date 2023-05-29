@@ -1,31 +1,28 @@
+import DateBox from "@/components/calendar/dateBox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserButton } from "@clerk/nextjs";
+import { daysInMonth, emptyEndDays, emptyStartDays } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function Dashboard() {
+  const start = emptyStartDays(5, 2023);
+  const mid = daysInMonth(5, 2023);
+  const end = emptyEndDays(5, 2023);
+
   return (
     <div className="w-screen p-8 bg-muted flex-grow flex flex-col">
       <div className="flex w-full justify-between items-center">
-        <Tabs defaultValue="calendar" className="">
-          <TabsList>
-            <TabsTrigger value="calendar">Calendar</TabsTrigger>
-            <TabsTrigger value="list">List</TabsTrigger>
-          </TabsList>
-        </Tabs>
-        <div className="space-x-3 flex items-center">
-          <div className="bg-background w-9 rounded-full h-9" />
-          <div className="space-x-0.5 flex w-36 justify-end items-center">
-            <button className="p-1 rounded-full hover:bg-accent">
-              <ChevronLeft className="w-5 h-5 -translate-x-[1px]" />
-            </button>
-            <div>September</div>
-            <button className="p-1 rounded-full hover:bg-accent">
-              <ChevronRight className="w-5 h-5 translate-x-[1px]" />
-            </button>
-          </div>
+        <div className="space-x-1 flex items-center justify-center">
+          <button className="p-1 rounded-md hover:bg-accent">
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <div className="text-xl font-semibold">September 2023</div>
+          <button className="p-1 rounded-md hover:bg-accent">
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
+        <div className="bg-background w-9 rounded-full h-9" />
       </div>
       <div className="mt-4 w-full flex-grow relative overflow-hidden flex flex-col min-h-[600px] gap-[1px] bg-accent p-[1px] rounded-xl">
         <div className="w-full gap-[1px] grid grid-cols-7 mb-[1px]">
@@ -39,7 +36,7 @@ export default function Dashboard() {
           ))}
         </div>
         <div className="w-full gap-[1px] flex-grow grid grid-cols-7 grid-rows-5">
-          <div className="w-full h-full flex flex-col justify-between hover:bg-muted items-start bg-background p-2">
+          {/* <div className="w-full h-full flex flex-col cursor-pointer justify-between hover:bg-neutral-950 items-start bg-background p-2">
             <div className="text-center font-medium text-neutral-600 text-sm">
               1
             </div>
@@ -54,41 +51,22 @@ export default function Dashboard() {
                 + _ more
               </div>
             </div>
-          </div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
-          <div className="w-full h-full bg-background p-2"></div>
+          </div> */}
+
+          {[...Array(start)].map((x, i) => (
+            <DateBox empty={true} key={`start-${i}`} />
+          ))}
+          {[...Array(mid)].map((x, i) => (
+            <DateBox
+              key={`mid-${i}`}
+              empty={false}
+              day={i + 1}
+              events={["e1", "e2", "e3", "e4"]}
+            />
+          ))}
+          {[...Array(end)].map((x, i) => (
+            <DateBox empty={true} key={`end-${i}`} />
+          ))}
         </div>
       </div>
     </div>
