@@ -1,3 +1,8 @@
+"use client";
+
+import { useViewStore } from "@/lib/state/view";
+import Link from "next/link";
+
 type emptyT = {
   empty: true;
 };
@@ -15,8 +20,18 @@ export default function DateBox(props: emptyT | dayT) {
 
   const { day, events } = props;
 
+  const month = useViewStore((state) => state.month);
+  const year = useViewStore((state) => state.year);
+  const setMonth = useViewStore((state) => state.setMonth);
+  const setYear = useViewStore((state) => state.setYear);
+
   return (
-    <div className="w-full h-full flex flex-col cursor-pointer justify-between hover:bg-neutral-950 items-start bg-background p-2">
+    <Link
+      href={`dashboard/${year}-${month.toString().padStart(2, "0")}-${day
+        .toString()
+        .padStart(2, "0")}`}
+      className="w-full h-full flex flex-col cursor-pointer justify-between hover:bg-neutral-950 items-start bg-background p-2"
+    >
       <div className="text-center font-medium text-neutral-600 text-sm">
         {day}
       </div>
@@ -35,6 +50,6 @@ export default function DateBox(props: emptyT | dayT) {
           </div>
         ) : null}
       </div>
-    </div>
+    </Link>
   );
 }
