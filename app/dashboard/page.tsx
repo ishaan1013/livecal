@@ -1,8 +1,6 @@
 import DateBox from "@/components/calendar/dateBox";
 import DateSelect from "@/components/calendar/dateSelect";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { daysInMonth, emptyEndDays, emptyStartDays } from "@/lib/utils";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 

@@ -8,7 +8,8 @@ export function cn(...inputs: ClassValue[]) {
 // date helpers
 
 export function emptyStartDays(m: number, y: number) {
-  const res = (new Date(`2023-${m.toString()}-01`).getDay() + 1) % 7;
+  const res =
+    (new Date(`${y}-${m.toString().padStart(2, "0")}-01`).getDay() + 1) % 7;
   return res;
 }
 
