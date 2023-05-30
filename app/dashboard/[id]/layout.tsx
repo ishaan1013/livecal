@@ -11,8 +11,13 @@ export default function EditorLayout({
   children: React.ReactNode;
 }) {
   const { id } = params;
+  const dateParts = id.split("-");
+  const date = new Date(
+    parseInt(dateParts[0]),
+    parseInt(dateParts[1]) - 1,
+    parseInt(dateParts[2])
+  );
 
-  const date = new Date(id);
   const dateString = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -25,7 +30,7 @@ export default function EditorLayout({
         <div className="space-x-4 flex items-center">
           <Button size="sm" variant="ghost">
             <Link className="flex items-center" href="/dashboard">
-              <ChevronLeft className="w-4 h-4 mr-2 -ml-1" />
+              <ChevronLeft className="w-4 h-4 mr-1 -ml-1" />
               Back
             </Link>
           </Button>

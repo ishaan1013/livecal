@@ -1,4 +1,5 @@
 import DateBox from "@/components/calendar/dateBox";
+import DateSelect from "@/components/calendar/dateSelect";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { daysInMonth, emptyEndDays, emptyStartDays } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,15 +14,7 @@ export default function Dashboard() {
   return (
     <div className="w-screen p-8 bg-muted flex-grow flex flex-col">
       <div className="flex w-full justify-between items-center">
-        <div className="space-x-1 flex items-center justify-center">
-          <button className="p-1 rounded-md hover:bg-accent">
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <div className="text-xl font-semibold">September 2023</div>
-          <button className="p-1 rounded-md hover:bg-accent">
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
+        <DateSelect />
         <div className="bg-background w-9 rounded-full h-9" />
       </div>
       <div className="mt-4 w-full flex-grow relative overflow-hidden flex flex-col min-h-[600px] gap-[1px] bg-accent p-[1px] rounded-xl">

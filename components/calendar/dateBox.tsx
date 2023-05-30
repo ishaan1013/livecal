@@ -22,8 +22,6 @@ export default function DateBox(props: emptyT | dayT) {
 
   const month = useViewStore((state) => state.month);
   const year = useViewStore((state) => state.year);
-  const setMonth = useViewStore((state) => state.setMonth);
-  const setYear = useViewStore((state) => state.setYear);
 
   return (
     <Link
