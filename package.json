@@ -13,6 +13,7 @@
     "@clerk/themes": "^1.7.3",
     "@liveblocks/client": "^1.0.9",
     "@liveblocks/zustand": "^1.0.9",
+    "@prisma/client": "^4.15.0",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-slot": "^1.0.2",
@@ -33,5 +34,8 @@
     "tailwindcss-animate": "^1.0.5",
     "typescript": "5.0.4",
     "zustand": "^4.3.8"
+  },
+  "devDependencies": {
+    "prisma": "^4.15.0"
   }
 }
