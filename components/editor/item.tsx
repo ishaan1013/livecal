@@ -1,14 +1,20 @@
 "use client";
 
-import { Checkbox } from "@radix-ui/react-checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Check, Pencil, Trash } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export default function Item() {
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState("test");
+
+  const [checked, setChecked] = useState(false);
+  const onCheckedChange = () => setChecked((prev) => !prev);
+  const cardClass = checked
+    ? "opacity-50 duration-200"
+    : "opacity-100 duration-200";
 
   const valueRef = useRef<HTMLInputElement>(null);
 
@@ -19,10 +25,10 @@ export default function Item() {
   }, [editing]);
 
   return (
-    <Card>
+    <Card className={cardClass}>
       <CardContent className="flex items-center justify-between p-2">
-        <div className="flex items-center space-x-2">
-          <Checkbox id="terms" />
+        <div className="flex items-center space-x-3 pl-1.5">
+          <Checkbox checked={checked} onCheckedChange={onCheckedChange} />
           <input
             ref={valueRef}
             value={value}
@@ -35,6 +41,7 @@ export default function Item() {
           <Button
             onClick={() => setEditing((prev) => !prev)}
             size={"sm"}
+            disabled={checked}
             variant={"secondary"}
           >
             {editing ? (

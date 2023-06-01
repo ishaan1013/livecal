@@ -9,15 +9,10 @@ interface ViewState {
 }
 
 export const useViewStore = create<ViewState>()(
-  devtools(
-    persist(
-      (set) => ({
-        month: 5,
-        year: 2023,
-        setMonth: (month) => set(() => ({ month })),
-        setYear: (year) => set(() => ({ year })),
-      }),
-      { name: "view" }
-    )
-  )
+  devtools((set) => ({
+    month: 5,
+    year: 2023,
+    setMonth: (month) => set(() => ({ month })),
+    setYear: (year) => set(() => ({ year })),
+  }))
 );

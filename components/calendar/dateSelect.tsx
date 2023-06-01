@@ -1,13 +1,20 @@
 "use client";
 
 import { useViewStore } from "@/lib/state/view";
+import { Checkbox } from "@radix-ui/react-checkbox";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect } from "react";
 
 export default function DateSelect() {
   const month = useViewStore((state) => state.month);
   const year = useViewStore((state) => state.year);
   const setMonth = useViewStore((state) => state.setMonth);
   const setYear = useViewStore((state) => state.setYear);
+
+  useEffect(() => {
+    console.log("month", month);
+    console.log("year", year);
+  }, [month, year]);
 
   const months = [
     "January",
