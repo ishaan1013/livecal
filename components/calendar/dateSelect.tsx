@@ -11,11 +11,6 @@ export default function DateSelect() {
   const setMonth = useViewStore((state) => state.setMonth);
   const setYear = useViewStore((state) => state.setYear);
 
-  useEffect(() => {
-    console.log("month", month);
-    console.log("year", year);
-  }, [month, year]);
-
   const months = [
     "January",
     "February",
