@@ -8,20 +8,36 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model MonthView {
+  id    String @unique
+  month Int
+  year  Int
+
+  user String
+
+  dates Date[]
+}
+
 model Date {
-  id    String @id @default(uuid())
-  day   Int    @db.Int()
-  month Int    @db.Int()
-  year  Int    @db.Int()
+  id    String @unique
+  day   Int
+  month Int
+  year  Int
+
+  viewId String
+  view   MonthView @relation(fields: [viewId], references: [id], onDelete: Cascade)
 
   tasks Task[]
+
+  @@index([viewId])
 }
 
 model Task {
-  id   String @id @default(uuid())
-  text String @db.VarChar(255)
+  id      String  @id @default(uuid())
+  text    String
+  checked Boolean
 
-  dateId String @db.VarChar(255)
+  dateId String
   date   Date   @relation(fields: [dateId], references: [id], onDelete: Cascade)
 
   @@index([dateId])
