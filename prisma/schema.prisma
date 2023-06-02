@@ -8,10 +8,21 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Star {
-  id            Int      @id @default(autoincrement())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  name          String   @db.VarChar(255)
-  constellation String   @db.VarChar(255)
+model Date {
+  id    String @id @default(uuid())
+  day   Int    @db.Int()
+  month Int    @db.Int()
+  year  Int    @db.Int()
+
+  tasks Task[]
+}
+
+model Task {
+  id   String @id @default(uuid())
+  text String @db.VarChar(255)
+
+  dateId String @db.VarChar(255)
+  date   Date   @relation(fields: [dateId], references: [id], onDelete: Cascade)
+
+  @@index([dateId])
 }
