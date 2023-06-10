@@ -1,13 +1,33 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import prisma from "../prisma";
 
 export async function setupView(month: string, year: string) {
-  // for viewing a month on the dashboard calendar
-  // FINDUNIQUE the month view, include relations (existing days and tasks)
-  // if null:
-  // CREATE month view, return empty
-  // return month view
+  const monthView = prisma.monthView.findUnique({
+    where: {
+      monthYear: `${month}-${year}`,
+    },
+    include: {
+      dates: {
+        include: {
+          tasks: true,
+        },
+      },
+    },
+  });
+
+  // if (monthView) {
+  //   return monthView;
+  // } else {
+  //   const newMonthView = await prisma.monthView.create({
+  //     data: {
+  //       monthYear: `${month}-${year}`,
+  //       user: "test",
+  //     },
+  //   });
+  //   return newMonthView;
+  // }
 }
 
 export async function setupDay(month: string, year: string, day: string) {

@@ -9,9 +9,7 @@ generator client {
 }
 
 model MonthView {
-  id    String @unique
-  month Int
-  year  Int
+  monthYear String @unique
 
   user String
 
@@ -25,7 +23,7 @@ model Date {
   year  Int
 
   viewId String
-  view   MonthView @relation(fields: [viewId], references: [id], onDelete: Cascade)
+  view   MonthView @relation(fields: [viewId], references: [monthYear], onDelete: Cascade)
 
   tasks Task[]
 

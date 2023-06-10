@@ -1,9 +1,8 @@
 "use client";
 
 import { useViewStore } from "@/lib/state/view";
-import { Checkbox } from "@radix-ui/react-checkbox";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function DateSelect() {
   const month = useViewStore((state) => state.month);
@@ -46,15 +45,24 @@ export default function DateSelect() {
 
   return (
     <div className="space-x-1 flex items-center justify-center">
-      <button onClick={handleMinus} className="p-1 rounded-md hover:bg-accent">
+      <button
+        onClick={handleMinus}
+        className="flex items-center justify-center h-9 w-9 rounded-md hover:bg-accent text-accent-foreground"
+      >
         <ChevronLeft className="w-5 h-5" />
       </button>
       <div className="text-xl font-semibold">
         {months[month - 1]} {year}
       </div>
-      <button onClick={handlePlus} className="p-1 rounded-md hover:bg-accent">
+      <button
+        onClick={handlePlus}
+        className="flex items-center justify-center h-9 w-9 rounded-md hover:bg-accent text-accent-foreground"
+      >
         <ChevronRight className="w-5 h-5" />
       </button>
+      <Button variant="ghost" size="sm">
+        Today
+      </Button>
     </div>
   );
 }
