@@ -3,12 +3,21 @@
 import { useViewStore } from "@/lib/state/view";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-export default function DateSelect() {
-  const month = useViewStore((state) => state.month);
-  const year = useViewStore((state) => state.year);
-  const setMonth = useViewStore((state) => state.setMonth);
-  const setYear = useViewStore((state) => state.setYear);
+export default function DateSelect({
+  month,
+  year,
+}: {
+  month: number;
+  year: number;
+}) {
+  // const month = useViewStore((state) => state.month);
+  // const year = useViewStore((state) => state.year);
+  // const setMonth = useViewStore((state) => state.setMonth);
+  // const setYear = useViewStore((state) => state.setYear);
+
+  const router = useRouter();
 
   const months = [
     "January",
@@ -27,19 +36,36 @@ export default function DateSelect() {
 
   const handleMinus = () => {
     if (month === 1) {
-      setMonth(12);
-      setYear(year - 1);
+      const newMonth = "12";
+      // setMonth(12);
+      const newYear = year.toString();
+      // setYear(year - 1);
+
+      router.push(`/dashboard/${newYear}/${newMonth}`);
     } else {
-      setMonth(month - 1);
+      const newMonth = (month - 1).toString().padStart(2, "0");
+      // setMonth(month - 1);
+      const newYear = year.toString();
+
+      router.push(`/dashboard/${newYear}/${newMonth}`);
     }
   };
 
   const handlePlus = () => {
     if (month === 12) {
-      setMonth(1);
-      setYear(year + 1);
+      // setMonth(1);
+      const newMonth = "01";
+      // setYear(year + 1);
+      const newYear = year.toString();
+
+      router.push(`/dashboard/${newYear}/${newMonth}`);
     } else {
-      setMonth(month + 1);
+      const newMonth = (month + 1).toString().padStart(2, "0");
+
+      // setMonth(month + 1);
+      const newYear = year.toString();
+
+      router.push(`/dashboard/${newYear}/${newMonth}`);
     }
   };
 

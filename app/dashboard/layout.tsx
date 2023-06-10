@@ -1,6 +1,5 @@
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import TestModal from "./@modal/(.)test/[id]/page";
 
 export default function DashboardLayout({
   children,

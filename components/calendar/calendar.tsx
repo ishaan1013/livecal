@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useTransition } from "react";
+// import { useEffect, useTransition } from "react";
 import DateBox from "./dateBox";
 
-import { useViewStore } from "@/lib/state/view";
+// import { useViewStore } from "@/lib/state/view";
 import { daysInMonth, emptyEndDays, emptyStartDays } from "@/lib/utils";
 
-export default function Calendar() {
-  const month = useViewStore((state) => state.month);
-  const year = useViewStore((state) => state.year);
+export default function Calendar({
+  month,
+  year,
+}: {
+  month: number;
+  year: number;
+}) {
+  // const month = useViewStore((state) => state.month);
+  // const year = useViewStore((state) => state.year);
 
   const start = emptyStartDays(month, year);
   const mid = daysInMonth(month, year);

@@ -25,7 +25,7 @@ export default function DateBox(props: emptyT | dayT) {
 
   return (
     <Link
-      href={`dashboard/${year}-${month.toString().padStart(2, "0")}-${day
+      href={`editor/${year}-${month.toString().padStart(2, "0")}-${day
         .toString()
         .padStart(2, "0")}`}
       className="w-full h-full flex flex-col cursor-pointer justify-between hover:bg-neutral-950 items-start bg-background p-2"
