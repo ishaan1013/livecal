@@ -6,9 +6,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Check, Pencil, Trash } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-export default function Item() {
+export default function Item({ text }: { text: string }) {
   const [editing, setEditing] = useState(false);
-  const [value, setValue] = useState("test");
+  const [value, setValue] = useState(text);
 
   const [checked, setChecked] = useState(false);
   const onCheckedChange = () => setChecked((prev) => !prev);

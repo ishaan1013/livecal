@@ -1,7 +1,8 @@
-import Item from "@/components/editor/item";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
+import EditorWrapper from "@/components/editor";
+// import Item from "@/components/editor/item";
+// import { Button } from "@/components/ui/button";
+// import { ChevronLeft } from "lucide-react";
+// import Link from "next/link";
 
 export default function EditorLayout({
   params,
@@ -25,8 +26,8 @@ export default function EditorLayout({
   });
 
   return (
-    <div className="w-screen p-8 bg-muted flex-grow flex items-center flex-col">
-      <div className="flex w-full justify-between items-center">
+    <div className="w-screen min-h-screen p-8 bg-muted flex-grow flex items-center flex-col">
+      {/* <div className="flex w-full justify-between items-center">
         <div className="space-x-3 flex items-center">
           <Button size="sm" variant="ghost">
             <Link className="flex items-center" href="/dashboard">
@@ -43,7 +44,9 @@ export default function EditorLayout({
 
       <div className="h-36 w-full space-y-2 max-w-screen-sm mt-6">
         {children}
-      </div>
+      </div> */}
+
+      <EditorWrapper dateString={dateString}>{children}</EditorWrapper>
     </div>
   );
 }

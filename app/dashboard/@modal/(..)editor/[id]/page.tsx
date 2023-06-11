@@ -1,6 +1,12 @@
 import Modal from "@/components/editor/modal";
+import { setupView } from "@/lib/data";
+import { setupDate } from "@/lib/data";
 
-export default function EditorModal({ params }: { params: { id: string } }) {
+export default async function EditorModal({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { id } = params;
   const dateParts = id.split("-");
   const date = new Date(
@@ -15,5 +21,15 @@ export default function EditorModal({ params }: { params: { id: string } }) {
     day: "numeric",
   });
 
-  return <Modal dateString={dateString} />;
+  // validate route
+
+  const view = await setupView({ month: dateParts[1], year: dateParts[0] });
+  const dateData = await setupDate({
+    day: dateParts[2],
+    month: dateParts[1],
+    year: dateParts[0],
+    view,
+  });
+
+  return <Modal dateData={dateData} dateString={dateString} />;
 }

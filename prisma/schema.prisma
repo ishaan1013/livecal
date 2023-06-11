@@ -24,11 +24,14 @@ model Date {
   month Int
   year  Int
 
+  user String
+
   viewId String
   view   MonthView @relation(fields: [viewId], references: [id], onDelete: Cascade)
 
   tasks Task[]
 
+  @@id([day, month, year, user], name: "DateId")
   @@index([viewId])
 }
 

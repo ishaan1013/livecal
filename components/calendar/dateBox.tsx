@@ -32,28 +32,30 @@ export default function DateBox(props: emptyT | dayT) {
       href={`editor/${year}-${month.toString().padStart(2, "0")}-${day
         .toString()
         .padStart(2, "0")}`}
-      className="w-full h-full flex flex-col cursor-pointer justify-between hover:bg-neutral-950 items-start bg-background p-2"
+      className="w-full h-full flex flex-col duration-150 group cursor-pointer justify-between hover:bg-neutral-950 items-start bg-background p-2"
     >
-      <div className="text-center font-medium mb-3 text-neutral-600 text-sm">
+      <div className="text-center font-medium mb-3 duration-150 group-hover:text-neutral-400 text-neutral-600 text-sm">
         {day}
       </div>
-      {tasks ? (
-        <div className="w-full space-y-0.5 min-h-[70px]">
-          {tasks.slice(0, 2).map((task, i) => (
-            <div
-              key={`event-${i}`}
-              className="w-full rounded px-1 py-0.5 bg-muted text-xs"
-            >
-              {task.text}
-            </div>
-          ))}
-          {tasks.length > 2 ? (
-            <div className="w-full rounded px-1 py-0.5 text-neutral-400 bg-muted text-xs">
-              + {tasks.length - 2} more
-            </div>
-          ) : null}
-        </div>
-      ) : null}
+      <div className="w-full space-y-0.5 min-h-[70px]">
+        {tasks ? (
+          <>
+            {tasks.slice(0, 2).map((task, i) => (
+              <div
+                key={`event-${i}`}
+                className="w-full rounded px-1 py-0.5 bg-muted text-xs"
+              >
+                {task.text}
+              </div>
+            ))}
+            {tasks.length > 2 ? (
+              <div className="w-full rounded px-1 py-0.5 text-neutral-400 bg-muted text-xs">
+                + {tasks.length - 2} more
+              </div>
+            ) : null}
+          </>
+        ) : null}
+      </div>
     </Link>
   );
 }
