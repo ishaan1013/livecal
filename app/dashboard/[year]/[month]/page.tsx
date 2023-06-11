@@ -5,6 +5,7 @@ import Calendar from "@/components/calendar/calendar";
 import DateSelect from "@/components/calendar/dateSelect";
 
 import prisma from "@/prisma";
+import { MonthView, Task } from "@prisma/client";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -24,10 +25,11 @@ export default async function Dashboard({
         <DateSelect month={parseInt(month)} year={parseInt(year)} />
         <div className="bg-background w-9 rounded-full h-9" />
       </div>
-      <div>{JSON.stringify(view)} prisma</div>
+
+      {/* <pre className="whitespace-pre">{JSON.stringify(view)} prisma</pre> */}
       {/* <pre className="whitespace-pre">{JSON.stringify(user, null, 2)}</pre> */}
 
-      {/* <div className="mt-4 w-full flex-grow relative overflow-hidden flex flex-col min-h-[600px] gap-[1px] bg-accent p-[1px] rounded-xl">
+      <div className="mt-4 w-full flex-grow relative overflow-hidden flex flex-col gap-[1px] bg-accent p-[1px] rounded-xl">
         <div className="w-full gap-[1px] grid grid-cols-7 mb-[1px]">
           {weekDays.map((day) => (
             <div
@@ -38,8 +40,10 @@ export default async function Dashboard({
             </div>
           ))}
         </div>
-        <Calendar month={parseInt(month)} year={parseInt(year)} />
-      </div> */}
+        {view ? (
+          <Calendar view={view} month={parseInt(month)} year={parseInt(year)} />
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -67,13 +71,31 @@ const setupView = async (params: { month: string; year: string }) => {
 
   const user = auth();
 
-  if (user.userId) {
-    const monthView = await prisma.monthView.findUnique({
-      where: {
-        MonthViewId: {
-          monthYear: `${year}-${month}`,
-          user: user.userId,
+  // if (user.userId) {
+  const monthView = await prisma.monthView.findUnique({
+    where: {
+      MonthViewId: {
+        monthYear: `${year}-${month}`,
+        user: user.userId!,
+      },
+    },
+    include: {
+      dates: {
+        include: {
+          tasks: true,
         },
+      },
+    },
+  });
+
+  if (monthView) {
+    console.log("monthView", monthView);
+    return monthView;
+  } else {
+    const newMonthView = await prisma.monthView.create({
+      data: {
+        monthYear: `${year}-${month}`,
+        user: user.userId!,
       },
       include: {
         dates: {
@@ -83,20 +105,9 @@ const setupView = async (params: { month: string; year: string }) => {
         },
       },
     });
-
-    if (monthView) {
-      console.log("monthView", monthView);
-      return monthView;
-    } else {
-      const newMonthView = await prisma.monthView.create({
-        data: {
-          monthYear: `${year}-${month}`,
-          user: user.userId,
-        },
-      });
-      console.log("newMonthView", newMonthView);
-      return newMonthView;
-      // return null;
-    }
+    console.log("newMonthView", newMonthView);
+    return newMonthView;
+    // return null;
   }
+  // }
 };

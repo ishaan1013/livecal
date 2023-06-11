@@ -1,24 +1,28 @@
 "use client";
 
-// import { useEffect, useTransition } from "react";
 import DateBox from "./dateBox";
 
-// import { useViewStore } from "@/lib/state/view";
+import { Date, MonthView, Task } from "@prisma/client";
 import { daysInMonth, emptyEndDays, emptyStartDays } from "@/lib/utils";
 
 export default function Calendar({
   month,
   year,
+  view,
 }: {
   month: number;
   year: number;
+  view: MonthView & {
+    dates: (Date & {
+      tasks: Task[];
+    })[];
+  };
 }) {
-  // const month = useViewStore((state) => state.month);
-  // const year = useViewStore((state) => state.year);
-
   const start = emptyStartDays(month, year);
   const mid = daysInMonth(month, year);
   const end = emptyEndDays(mid, start);
+
+  const viewDates = view.dates;
 
   return (
     <div className="w-full gap-[1px] flex-grow grid grid-cols-7 grid-rows-5">
@@ -35,8 +39,10 @@ export default function Calendar({
             <DateBox
               key={`mid-${i}`}
               empty={false}
+              data={viewDates.filter((d) => d.day === i + 1)[0]}
               day={i + 1}
-              events={["e1", "e2", "e3", "e4"]}
+              month={month}
+              year={year}
             />
           ))}
         </>
@@ -50,5 +56,6 @@ export default function Calendar({
         </>
       ) : null}
     </div>
+    // <pre>{JSON.stringify(view, null, 2)}</pre>
   );
 }

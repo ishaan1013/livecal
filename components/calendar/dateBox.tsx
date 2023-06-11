@@ -1,6 +1,7 @@
 "use client";
 
 import { useViewStore } from "@/lib/state/view";
+import { Date, Task } from "@prisma/client";
 import Link from "next/link";
 
 type emptyT = {
@@ -10,7 +11,11 @@ type emptyT = {
 type dayT = {
   empty: false;
   day: number;
-  events: string[];
+  data: Date & {
+    tasks: Task[];
+  };
+  month: number;
+  year: number;
 };
 
 export default function DateBox(props: emptyT | dayT) {
@@ -18,10 +23,9 @@ export default function DateBox(props: emptyT | dayT) {
     return <div className="w-full h-full bg-background "></div>;
   }
 
-  const { day, events } = props;
+  const { day, month, year, data } = props;
 
-  const month = useViewStore((state) => state.month);
-  const year = useViewStore((state) => state.year);
+  const tasks = data?.tasks ?? undefined;
 
   return (
     <Link
@@ -30,24 +34,26 @@ export default function DateBox(props: emptyT | dayT) {
         .padStart(2, "0")}`}
       className="w-full h-full flex flex-col cursor-pointer justify-between hover:bg-neutral-950 items-start bg-background p-2"
     >
-      <div className="text-center font-medium text-neutral-600 text-sm">
+      <div className="text-center font-medium mb-3 text-neutral-600 text-sm">
         {day}
       </div>
-      <div className="w-full space-y-0.5">
-        {events.slice(0, 2).map((event, i) => (
-          <div
-            key={`event-${i}`}
-            className="w-full rounded px-1 py-0.5 bg-muted text-xs"
-          >
-            {event}
-          </div>
-        ))}
-        {events.length > 2 ? (
-          <div className="w-full rounded px-1 py-0.5 text-neutral-400 bg-muted text-xs">
-            + {events.length - 2} more
-          </div>
-        ) : null}
-      </div>
+      {tasks ? (
+        <div className="w-full space-y-0.5 min-h-[70px]">
+          {tasks.slice(0, 2).map((task, i) => (
+            <div
+              key={`event-${i}`}
+              className="w-full rounded px-1 py-0.5 bg-muted text-xs"
+            >
+              {task.text}
+            </div>
+          ))}
+          {tasks.length > 2 ? (
+            <div className="w-full rounded px-1 py-0.5 text-neutral-400 bg-muted text-xs">
+              + {tasks.length - 2} more
+            </div>
+          ) : null}
+        </div>
+      ) : null}
     </Link>
   );
 }
