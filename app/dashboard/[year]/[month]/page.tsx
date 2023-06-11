@@ -5,9 +5,6 @@ import Calendar from "@/components/calendar/calendar";
 import DateSelect from "@/components/calendar/dateSelect";
 
 import prisma from "@/prisma";
-import { MonthView, Task } from "@prisma/client";
-
-const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default async function Dashboard({
   params,
@@ -29,21 +26,9 @@ export default async function Dashboard({
       {/* <pre className="whitespace-pre">{JSON.stringify(view)} prisma</pre> */}
       {/* <pre className="whitespace-pre">{JSON.stringify(user, null, 2)}</pre> */}
 
-      <div className="mt-4 w-full flex-grow relative overflow-hidden flex flex-col gap-[1px] bg-accent p-[1px] rounded-xl">
-        <div className="w-full gap-[1px] grid grid-cols-7 mb-[1px]">
-          {weekDays.map((day) => (
-            <div
-              key={day}
-              className="py-3 font-medium bg-background text-neutral-600 w-full text-center"
-            >
-              {day}
-            </div>
-          ))}
-        </div>
-        {view ? (
-          <Calendar view={view} month={parseInt(month)} year={parseInt(year)} />
-        ) : null}
-      </div>
+      {view ? (
+        <Calendar view={view} month={parseInt(month)} year={parseInt(year)} />
+      ) : null}
     </div>
   );
 }
