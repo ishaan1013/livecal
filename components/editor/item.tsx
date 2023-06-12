@@ -1,10 +1,19 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Check, Pencil, Trash } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 
 export default function Item({ text }: { text: string }) {
   const [editing, setEditing] = useState(false);
@@ -41,6 +50,7 @@ export default function Item({ text }: { text: string }) {
           <Button
             onClick={() => setEditing((prev) => !prev)}
             size={"sm"}
+            className="px-2"
             disabled={checked}
             variant={"secondary"}
           >
@@ -50,7 +60,39 @@ export default function Item({ text }: { text: string }) {
               <Pencil className="w-4 h-4" />
             )}
           </Button>
-          <Button size={"sm"} variant={"destructive"}>
+          <Select>
+            <SelectTrigger>
+              <SelectValue
+                placeholder={
+                  <div className="w-6 h-4 rounded-full bg-neutral-500" />
+                }
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="red">
+                <div className="w-6 h-4 rounded-full bg-red-500" />
+              </SelectItem>
+              <SelectItem value="orange">
+                <div className="w-6 h-4 rounded-full bg-orange-500" />
+              </SelectItem>
+              <SelectItem value="yellow">
+                <div className="w-6 h-4 rounded-full bg-yellow-500" />
+              </SelectItem>
+              <SelectItem value="green">
+                <div className="w-6 h-4 rounded-full bg-green-500" />
+              </SelectItem>
+              <SelectItem value="blue">
+                <div className="w-6 h-4 rounded-full bg-blue-500" />
+              </SelectItem>
+              <SelectItem value="purple">
+                <div className="w-6 h-4 rounded-full bg-purple-500" />
+              </SelectItem>
+              <SelectItem value="pink">
+                <div className="w-6 h-4 rounded-full bg-pink-500" />
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <Button size={"sm"} className="w-9 px-2" variant={"destructive"}>
             <Trash className="w-4 h-4" />
           </Button>
         </div>

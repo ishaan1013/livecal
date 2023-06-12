@@ -37,14 +37,15 @@ export default function DateBox(props: emptyT | dayT) {
       <div className="text-center font-medium mb-3 duration-150 group-hover:text-neutral-400 text-neutral-600 text-sm">
         {day}
       </div>
-      <div className="w-full space-y-0.5 min-h-[70px]">
+      <div className="w-full space-y-0.5 min-h-[40px] whitespace-nowrap overflow-hidden text-ellipsis">
         {tasks ? (
           <>
             {tasks.slice(0, 2).map((task, i) => (
               <div
                 key={`event-${i}`}
-                className="w-full rounded px-1 py-0.5 bg-muted text-xs"
+                className="w-full rounded overflow-hidden relative pr-1 pl-2 py-0.5 bg-muted text-xs"
               >
+                <div className="absolute left-0 top-0 w-1 h-full bg-purple-500" />
                 {task.text}
               </div>
             ))}

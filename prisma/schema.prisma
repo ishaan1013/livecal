@@ -39,9 +39,20 @@ model Task {
   id      String  @id @default(uuid())
   text    String
   checked Boolean
+  label   Label
 
   dateId String
   date   Date   @relation(fields: [dateId], references: [id], onDelete: Cascade)
 
   @@index([dateId])
+}
+
+enum Label {
+  RED
+  ORANGE
+  YELLOW
+  GREEN
+  BLUE
+  PURPLE
+  PINK
 }

@@ -24,7 +24,7 @@ export const setupView = async (params: { month: string; year: string }) => {
   });
 
   if (monthView) {
-    console.log("monthView", monthView);
+    // console.log("monthView", monthView);
     return monthView;
   } else {
     const newMonthView = await prisma.monthView.create({
@@ -40,7 +40,7 @@ export const setupView = async (params: { month: string; year: string }) => {
         },
       },
     });
-    console.log("newMonthView", newMonthView);
+    // console.log("newMonthView", newMonthView);
     return newMonthView;
     // return null;
   }
