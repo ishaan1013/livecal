@@ -31,5 +31,5 @@ export default async function EditorModal({
     view,
   });
 
-  return <Modal dateData={dateData} dateString={dateString} />;
+  return <Modal dateData={dateData} dateString={dateString} path={id} />;
 }

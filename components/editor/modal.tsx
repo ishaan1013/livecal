@@ -1,26 +1,30 @@
 "use client";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Date, Task } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { createTask } from "@/lib/actions";
 
 import Item from "./item";
-// import { ChevronLeft } from "lucide-react";
-
-// import * as DialogPrimitive from "@radix-ui/react-dialog";
 import EditorWrapper from ".";
-import { Date, Task } from "@prisma/client";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+
 import { Plus } from "lucide-react";
+import { useTransition } from "react";
 
 export default function Modal({
   dateString,
   dateData,
+  path,
 }: {
   dateString: string;
   dateData: Date & {
     tasks: Task[];
   };
+  path: string;
 }) {
+  let [isPending, startTransition] = useTransition();
+
   const router = useRouter();
 
   const onOpenChange = (open: boolean) => {
@@ -37,10 +41,20 @@ export default function Modal({
             {dateData.tasks.map((task) => (
               <Item text={task.text} label={task.label} />
             ))}
-            <Button variant={"secondary"} className="w-full">
+            <Button
+              onClick={() =>
+                startTransition(() => createTask(path, dateData.id))
+              }
+              variant={"secondary"}
+              className="w-full"
+            >
               <Plus className="h-4 w-4 mr-2" />
-              Add Task
+              Add Task {dateString}
             </Button>
+            {/* <pre className="text-xs whitespace-pre">
+              {JSON.stringify(dateData, null, 2)}
+            </pre> */}
+            {isPending ? <div className="text-xs">pending</div> : null}
           </EditorWrapper>
         </div>
       </DialogContent>

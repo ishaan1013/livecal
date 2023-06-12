@@ -1,54 +1,31 @@
-// "use server";
+"use server";
 
-// import { revalidatePath } from "next/cache";
-// import prisma from "../prisma";
+import { revalidatePath } from "next/cache";
+import prisma from "../prisma";
 
-// export async function setupView(month: string, year: string) {
-//   const monthView = prisma.monthView.findUnique({
-//     where: {
-//       monthYear: `${month}-${year}`,
-//     },
-//     include: {
-//       dates: {
-//         include: {
-//           tasks: true,
-//         },
-//       },
-//     },
-//   });
+export async function createTask(path: string, dateId: string) {
+  console.log("created");
 
-//   if (monthView) {
-//     return monthView;
-//   } else {
-//     const newMonthView = await prisma.monthView.create({
-//       data: {
-//         monthYear: `${month}-${year}`,
-//         user: "test",
-//       },
-//     });
-//     return newMonthView;
-//   }
-// }
+  const task = await prisma.task.create({
+    data: {
+      text: "New Task",
+      checked: false,
+      dateId,
+      label: "RED",
+    },
+  });
 
-// export async function setupDay(month: string, year: string, day: string) {
-//   // for after clicking a day on the calendar
-//   // if day exists from setupView, use that data
-//   // else:
-//   // CREATE day view, return empty
-// }
+  revalidatePath("/editor/" + path);
+}
 
-// export async function createTask(text: string) {
-//   // CREATE task, return status
-// }
+export async function updateTask(id: string, text: string) {
+  // UPDATE task, return status
+}
 
-// export async function updateTask(id: string, text: string) {
-//   // UPDATE task, return status
-// }
+export async function checkTask(id: string, checked: boolean) {
+  // UPDATE task, return status
+}
 
-// export async function checkTask(id: string, checked: boolean) {
-//   // UPDATE task, return status
-// }
-
-// export async function deleteTask(id: string) {
-//   // DELETE task, return status
-// }
+export async function deleteTask(id: string) {
+  // DELETE task, return status
+}

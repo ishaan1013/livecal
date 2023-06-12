@@ -21,7 +21,7 @@ export const setupDate = async ({
 
   const existingDate = view.dates.find((date) => date.day === parseInt(day));
   if (existingDate) {
-    console.log("existingDate", existingDate);
+    // console.log("existingDate", existingDate);
     return existingDate;
   }
 
@@ -37,6 +37,6 @@ export const setupDate = async ({
       tasks: true,
     },
   });
-  console.log("newDateData", newDateData);
+  // console.log("newDateData", newDateData);
   return newDateData;
 };
