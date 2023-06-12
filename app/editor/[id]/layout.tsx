@@ -27,25 +27,6 @@ export default function EditorLayout({
 
   return (
     <div className="w-screen min-h-screen p-8 bg-muted flex-grow flex items-center flex-col">
-      {/* <div className="flex w-full justify-between items-center">
-        <div className="space-x-3 flex items-center">
-          <Button size="sm" variant="ghost">
-            <Link className="flex items-center" href="/dashboard">
-              <ChevronLeft className="w-4 h-4 mr-1 -ml-1" />
-              Back
-            </Link>
-          </Button>
-          <div className="text-xl font-semibold">{dateString}</div>
-        </div>
-        <div className="space-x-2 flex items-center">
-          <div className="bg-background w-9 rounded-full h-9" />
-        </div>
-      </div>
-
-      <div className="h-36 w-full space-y-2 max-w-screen-sm mt-6">
-        {children}
-      </div> */}
-
       <EditorWrapper dateString={dateString}>{children}</EditorWrapper>
     </div>
   );

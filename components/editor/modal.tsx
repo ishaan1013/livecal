@@ -1,6 +1,7 @@
 "use client";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 import Item from "./item";
@@ -9,6 +10,7 @@ import Item from "./item";
 // import * as DialogPrimitive from "@radix-ui/react-dialog";
 import EditorWrapper from ".";
 import { Date, Task } from "@prisma/client";
+import { Plus } from "lucide-react";
 
 export default function Modal({
   dateString,
@@ -33,9 +35,12 @@ export default function Modal({
         <div className="w-full flex items-center flex-col">
           <EditorWrapper modal dateString={dateString}>
             {dateData.tasks.map((task) => (
-              <Item text={task.text} />
+              <Item text={task.text} label={task.label} />
             ))}
-            {dateData.tasks.length === 0 ? <div>no tasks</div> : null}
+            <Button variant={"secondary"} className="w-full">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Task
+            </Button>
           </EditorWrapper>
         </div>
       </DialogContent>

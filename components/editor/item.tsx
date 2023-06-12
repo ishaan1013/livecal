@@ -14,8 +14,9 @@ import {
 } from "@/components/ui/select";
 
 import { Check, Pencil, Trash } from "lucide-react";
+import { Label } from "@prisma/client";
 
-export default function Item({ text }: { text: string }) {
+export default function Item({ text, label }: { text: string; label: Label }) {
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(text);
 
@@ -32,6 +33,12 @@ export default function Item({ text }: { text: string }) {
       valueRef.current.focus();
     }
   }, [editing]);
+
+  const [labelValue, setLabelValue] = useState<Label>(label);
+
+  const onLabelChange = (label: Label) => {
+    setLabelValue(label);
+  };
 
   return (
     <Card className={cardClass}>
@@ -60,34 +67,30 @@ export default function Item({ text }: { text: string }) {
               <Pencil className="w-4 h-4" />
             )}
           </Button>
-          <Select>
+          <Select value={labelValue} onValueChange={onLabelChange}>
             <SelectTrigger>
-              <SelectValue
-                placeholder={
-                  <div className="w-6 h-4 rounded-full bg-neutral-500" />
-                }
-              />
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="red">
+              <SelectItem value="RED">
                 <div className="w-6 h-4 rounded-full bg-red-500" />
               </SelectItem>
-              <SelectItem value="orange">
+              <SelectItem value="ORANGE">
                 <div className="w-6 h-4 rounded-full bg-orange-500" />
               </SelectItem>
-              <SelectItem value="yellow">
+              <SelectItem value="YELLOW">
                 <div className="w-6 h-4 rounded-full bg-yellow-500" />
               </SelectItem>
-              <SelectItem value="green">
+              <SelectItem value="GREEN">
                 <div className="w-6 h-4 rounded-full bg-green-500" />
               </SelectItem>
-              <SelectItem value="blue">
+              <SelectItem value="BLUE">
                 <div className="w-6 h-4 rounded-full bg-blue-500" />
               </SelectItem>
-              <SelectItem value="purple">
+              <SelectItem value="PURPLE">
                 <div className="w-6 h-4 rounded-full bg-purple-500" />
               </SelectItem>
-              <SelectItem value="pink">
+              <SelectItem value="PINK">
                 <div className="w-6 h-4 rounded-full bg-pink-500" />
               </SelectItem>
             </SelectContent>
