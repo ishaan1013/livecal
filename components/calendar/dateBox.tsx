@@ -18,6 +18,16 @@ type dayT = {
   year: number;
 };
 
+const labelColors = {
+  RED: "absolute left-0 top-0 w-1 h-full bg-red-500",
+  ORANGE: "absolute left-0 top-0 w-1 h-full bg-orange-500",
+  YELLOW: "absolute left-0 top-0 w-1 h-full bg-yellow-500",
+  GREEN: "absolute left-0 top-0 w-1 h-full bg-green-500",
+  BLUE: "absolute left-0 top-0 w-1 h-full bg-blue-500",
+  PURPLE: "absolute left-0 top-0 w-1 h-full bg-purple-500",
+  PINK: "absolute left-0 top-0 w-1 h-full bg-pink-500",
+};
+
 export default function DateBox(props: emptyT | dayT) {
   if (props.empty === true) {
     return <div className="w-full h-full bg-background "></div>;
@@ -45,7 +55,7 @@ export default function DateBox(props: emptyT | dayT) {
                 key={`event-${i}`}
                 className="w-full rounded overflow-hidden relative pr-1 pl-2 py-0.5 bg-muted text-xs"
               >
-                <div className="absolute left-0 top-0 w-1 h-full bg-purple-500" />
+                <div className={labelColors[task.label]} />
                 {task.text}
               </div>
             ))}
