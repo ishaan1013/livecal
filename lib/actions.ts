@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
+import { Label } from "@prisma/client";
 
 export async function createTask(path: string, dateId: string) {
   console.log("created");
@@ -29,8 +30,28 @@ export async function updateTask(itemId: string, text: string) {
   });
 }
 
+export async function relabelTask(itemId: string, label: Label) {
+  await prisma.task.update({
+    where: {
+      id: itemId,
+    },
+    data: {
+      label,
+    },
+  });
+}
+
 export async function checkTask(itemId: string, newState: boolean) {
-  // UPDATE task, return status
+  const updated = await prisma.task.update({
+    where: {
+      id: itemId,
+    },
+    data: {
+      checked: newState,
+    },
+  });
+
+  console.log("checked: ", updated);
 }
 
 export async function deleteTask(path: string, itemId: string) {

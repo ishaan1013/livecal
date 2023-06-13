@@ -15,18 +15,20 @@ import {
 
 import { Check, Pencil, Trash } from "lucide-react";
 import { Label } from "@prisma/client";
-import { deleteTask, updateTask } from "@/lib/actions";
+import { checkTask, deleteTask, relabelTask, updateTask } from "@/lib/actions";
 
 export default function Item({
   path,
   text,
   label,
   itemId,
+  check,
 }: {
   path: string;
   text: string;
   label: Label;
   itemId: string;
+  check: boolean;
 }) {
   let [isPending, startTransition] = useTransition();
 
@@ -42,24 +44,18 @@ export default function Item({
     }
   }, [editing]);
 
-  const [checked, setChecked] = useState(false);
-  const onCheckedChange = () => setChecked((prev) => !prev);
+  const [checked, setChecked] = useState(check);
+
   const cardClass = isPending
     ? "opacity-30 duration-200 pointer-events-none cursor-progress"
-    : checked
-    ? "opacity-50 duration-200"
     : "opacity-100 duration-200";
 
   const [labelValue, setLabelValue] = useState<Label>(label);
 
-  const onLabelChange = (label: Label) => {
-    setLabelValue(label);
-  };
-
   const handleEdit = () => {
-    const newEditing = !editing;
+    const newState = !editing;
 
-    if (newEditing) {
+    if (newState) {
       setOldValue(value);
     } else {
       if (value && value.length !== 0 && value !== oldValue) {
@@ -68,7 +64,20 @@ export default function Item({
         setValue(oldValue);
       }
     }
-    setEditing(newEditing);
+    setEditing(newState);
+  };
+
+  const onCheckedChange = () => {
+    const newState = !checked;
+
+    startTransition(() => checkTask(itemId, newState));
+    setChecked((prev) => !prev);
+  };
+
+  const onLabelChange = (label: Label) => {
+    startTransition(() => relabelTask(itemId, label));
+
+    setLabelValue(label);
   };
 
   return (
@@ -81,7 +90,8 @@ export default function Item({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             disabled={!editing}
-            className="bg-transparent max-w-[200px] text-ellipsis whitespace-nowrap overflow-hidden  py-[1px] border-y-2 border-transparent outline-none focus:border-b-accent-foreground"
+            style={checked ? { textDecorationLine: "line-through" } : {}}
+            className="bg-transparent max-w-[200px] text-ellipsis whitespace-nowrap overflow-hidden py-[1px] border-y-2 border-transparent outline-none focus:border-b-accent-foreground"
           />
         </div>
         <div className="flex items-center space-x-2">
@@ -98,7 +108,11 @@ export default function Item({
               <Pencil className="w-4 h-4" />
             )}
           </Button>
-          <Select value={labelValue} onValueChange={onLabelChange}>
+          <Select
+            disabled={checked}
+            value={labelValue}
+            onValueChange={onLabelChange}
+          >
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>

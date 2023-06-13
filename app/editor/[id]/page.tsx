@@ -20,7 +20,14 @@ export default async function Editor({ params }: { params: { id: string } }) {
   return (
     <>
       {dateData.tasks.map((task) => (
-        <Item text={task.text} label={task.label} />
+        <Item
+          key={task.id}
+          path={id}
+          itemId={task.id}
+          text={task.text}
+          label={task.label}
+          check={task.checked}
+        />
       ))}
       <Button variant={"secondary"} className="w-full">
         <Plus className="h-4 w-4 mr-2" />

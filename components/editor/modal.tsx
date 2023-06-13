@@ -46,10 +46,12 @@ export default function Modal({
           <EditorWrapper modal dateString={dateString}>
             {dateData.tasks.map((task) => (
               <Item
+                key={task.id}
                 path={path}
                 itemId={task.id}
                 text={task.text}
                 label={task.label}
+                check={task.checked}
               />
             ))}
             <Button
