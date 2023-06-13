@@ -40,9 +40,7 @@ export default function EditorWrapper({
         </div>
       </div>
 
-      <div className="h-36 w-full space-y-2 max-w-screen-sm mt-6">
-        {children}
-      </div>
+      <div className="w-full space-y-2 max-w-screen-sm mt-6">{children}</div>
     </>
   );
 }

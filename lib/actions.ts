@@ -6,7 +6,7 @@ import prisma from "../prisma";
 export async function createTask(path: string, dateId: string) {
   console.log("created");
 
-  const task = await prisma.task.create({
+  await prisma.task.create({
     data: {
       text: "New Task",
       checked: false,
@@ -18,14 +18,29 @@ export async function createTask(path: string, dateId: string) {
   revalidatePath("/editor/" + path);
 }
 
-export async function updateTask(id: string, text: string) {
+export async function updateTask(itemId: string, text: string) {
+  await prisma.task.update({
+    where: {
+      id: itemId,
+    },
+    data: {
+      text,
+    },
+  });
+}
+
+export async function checkTask(itemId: string, newState: boolean) {
   // UPDATE task, return status
 }
 
-export async function checkTask(id: string, checked: boolean) {
-  // UPDATE task, return status
-}
-
-export async function deleteTask(id: string) {
+export async function deleteTask(path: string, itemId: string) {
   // DELETE task, return status
+
+  await prisma.task.delete({
+    where: {
+      id: itemId,
+    },
+  });
+
+  revalidatePath("/editor/" + path);
 }

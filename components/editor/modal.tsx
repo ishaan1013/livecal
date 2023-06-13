@@ -1,7 +1,9 @@
 "use client";
 
 import { Date, Task } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { createTask } from "@/lib/actions";
 
 import Item from "./item";
@@ -10,7 +12,6 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 import { Plus } from "lucide-react";
-import { useTransition } from "react";
 
 export default function Modal({
   dateString,
@@ -29,7 +30,12 @@ export default function Modal({
 
   const onOpenChange = (open: boolean) => {
     if (!open) {
+      const revalidateDash =
+        "/dashboard/" + path.split("-").slice(0, 2).join("/");
+      console.log("routing back");
       router.back();
+      // console.log("reval path", revalidateDash);
+      // revalidatePath(revalidateDash);
     }
   };
 
@@ -39,12 +45,17 @@ export default function Modal({
         <div className="w-full flex items-center flex-col">
           <EditorWrapper modal dateString={dateString}>
             {dateData.tasks.map((task) => (
-              <Item text={task.text} label={task.label} />
+              <Item
+                path={path}
+                itemId={task.id}
+                text={task.text}
+                label={task.label}
+              />
             ))}
             <Button
-              onClick={() =>
-                startTransition(() => createTask(path, dateData.id))
-              }
+              onClick={() => {
+                startTransition(() => createTask(path, dateData.id));
+              }}
               variant={"secondary"}
               className="w-full"
             >

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,16 +15,24 @@ import {
 
 import { Check, Pencil, Trash } from "lucide-react";
 import { Label } from "@prisma/client";
+import { deleteTask, updateTask } from "@/lib/actions";
 
-export default function Item({ text, label }: { text: string; label: Label }) {
+export default function Item({
+  path,
+  text,
+  label,
+  itemId,
+}: {
+  path: string;
+  text: string;
+  label: Label;
+  itemId: string;
+}) {
+  let [isPending, startTransition] = useTransition();
+
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(text);
-
-  const [checked, setChecked] = useState(false);
-  const onCheckedChange = () => setChecked((prev) => !prev);
-  const cardClass = checked
-    ? "opacity-50 duration-200"
-    : "opacity-100 duration-200";
+  const [oldValue, setOldValue] = useState(text);
 
   const valueRef = useRef<HTMLInputElement>(null);
 
@@ -34,10 +42,33 @@ export default function Item({ text, label }: { text: string; label: Label }) {
     }
   }, [editing]);
 
+  const [checked, setChecked] = useState(false);
+  const onCheckedChange = () => setChecked((prev) => !prev);
+  const cardClass = isPending
+    ? "opacity-30 duration-200 pointer-events-none cursor-progress"
+    : checked
+    ? "opacity-50 duration-200"
+    : "opacity-100 duration-200";
+
   const [labelValue, setLabelValue] = useState<Label>(label);
 
   const onLabelChange = (label: Label) => {
     setLabelValue(label);
+  };
+
+  const handleEdit = () => {
+    const newEditing = !editing;
+
+    if (newEditing) {
+      setOldValue(value);
+    } else {
+      if (value && value.length !== 0 && value !== oldValue) {
+        startTransition(() => updateTask(itemId, value));
+      } else {
+        setValue(oldValue);
+      }
+    }
+    setEditing(newEditing);
   };
 
   return (
@@ -55,7 +86,7 @@ export default function Item({ text, label }: { text: string; label: Label }) {
         </div>
         <div className="flex items-center space-x-2">
           <Button
-            onClick={() => setEditing((prev) => !prev)}
+            onClick={handleEdit}
             size={"sm"}
             className="px-2"
             disabled={checked}
@@ -95,7 +126,15 @@ export default function Item({ text, label }: { text: string; label: Label }) {
               </SelectItem>
             </SelectContent>
           </Select>
-          <Button size={"sm"} className="w-9 px-2" variant={"destructive"}>
+          <Button
+            onClick={() => {
+              setValue("Deleting...");
+              startTransition(() => deleteTask(path, itemId));
+            }}
+            size={"sm"}
+            className="w-9 px-2"
+            variant={"destructive"}
+          >
             <Trash className="w-4 h-4" />
           </Button>
         </div>
