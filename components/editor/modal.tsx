@@ -3,15 +3,12 @@
 import { Date, Task } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { createTask } from "@/lib/actions";
 
 import Item from "./item";
 import EditorWrapper from ".";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
-import { Plus } from "lucide-react";
+import AddButton from "./addButton";
 
 export default function Modal({
   dateString,
@@ -24,8 +21,6 @@ export default function Modal({
   };
   path: string;
 }) {
-  let [isPending, startTransition] = useTransition();
-
   const router = useRouter();
 
   const onOpenChange = (open: boolean) => {
@@ -54,20 +49,11 @@ export default function Modal({
                 check={task.checked}
               />
             ))}
-            <Button
-              onClick={() => {
-                startTransition(() => createTask(path, dateData.id));
-              }}
-              variant={"secondary"}
-              className="w-full"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Task {dateString}
-            </Button>
+
+            <AddButton path={path} dateId={dateData.id} />
             {/* <pre className="text-xs whitespace-pre">
               {JSON.stringify(dateData, null, 2)}
             </pre> */}
-            {isPending ? <div className="text-xs">pending</div> : null}
           </EditorWrapper>
         </div>
       </DialogContent>

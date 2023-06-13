@@ -1,7 +1,6 @@
+import AddButton from "@/components/editor/addButton";
 import Item from "@/components/editor/item";
-import { Button } from "@/components/ui/button";
 import { setupDate, setupView } from "@/lib/data";
-import { Plus } from "lucide-react";
 
 export default async function Editor({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -29,10 +28,8 @@ export default async function Editor({ params }: { params: { id: string } }) {
           check={task.checked}
         />
       ))}
-      <Button variant={"secondary"} className="w-full">
-        <Plus className="h-4 w-4 mr-2" />
-        Add Task
-      </Button>
+
+      <AddButton path={id} dateId={dateData.id} />
     </>
   );
 }
