@@ -5,13 +5,13 @@ export const setupView = async (params: { month: string; year: string }) => {
   const { month, year } = params;
 
   const user = auth();
+  const viewId = user.hasOwnProperty("orgId") ? user.orgId : user.userId;
 
-  // if (user.userId) {
   const monthView = await prisma.monthView.findUnique({
     where: {
       MonthViewId: {
         monthYear: `${year}-${month}`,
-        user: user.userId!,
+        user: viewId!,
       },
     },
     include: {
@@ -24,13 +24,12 @@ export const setupView = async (params: { month: string; year: string }) => {
   });
 
   if (monthView) {
-    // console.log("monthView", monthView);
     return monthView;
   } else {
     const newMonthView = await prisma.monthView.create({
       data: {
         monthYear: `${year}-${month}`,
-        user: user.userId!,
+        user: viewId!,
       },
       include: {
         dates: {
@@ -44,5 +43,4 @@ export const setupView = async (params: { month: string; year: string }) => {
     return newMonthView;
     // return null;
   }
-  // }
 };

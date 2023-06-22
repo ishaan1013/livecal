@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Calendar from "@/components/calendar/calendar";
 import DateSelect from "@/components/calendar/dateSelect";
 import { setupView } from "@/lib/data";
+import { auth } from "@clerk/nextjs";
 
 // import prisma from "@/prisma";
 
@@ -13,6 +14,8 @@ export default async function Dashboard({
   params: { month: string; year: string };
 }) {
   const { month, year } = params;
+
+  const user = auth();
 
   validateRoute(params);
   const view = await setupView(params);
@@ -25,7 +28,7 @@ export default async function Dashboard({
       </div>
 
       {/* <pre className="whitespace-pre">{JSON.stringify(view)} prisma</pre> */}
-      {/* <pre className="whitespace-pre">{JSON.stringify(user, null, 2)}</pre> */}
+      <pre className="whitespace-pre">{JSON.stringify(user, null, 2)}</pre>
 
       {view ? (
         <Calendar view={view} month={parseInt(month)} year={parseInt(year)} />
