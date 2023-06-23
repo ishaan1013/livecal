@@ -19,17 +19,22 @@ export const setupDate = async ({
 }) => {
   const user = auth();
 
+  console.log("existing dates: ", view.dates);
+
   const existingDate = view.dates.find((date) => date.day === parseInt(day));
   if (existingDate) {
     return existingDate;
   }
+
+  const org = user.orgId === undefined || user.orgId === null ? false : true;
+  const id = org ? user.orgId : user.userId;
 
   const newDateData = await prisma.date.create({
     data: {
       day: parseInt(day),
       month: parseInt(month),
       year: parseInt(year),
-      user: user.userId!,
+      user: id!,
       viewId: view.id,
     },
     include: {

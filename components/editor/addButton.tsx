@@ -14,8 +14,6 @@ export default function AddButton({
 }) {
   const [isPending, startTransition] = useTransition();
 
-  // loading state
-
   return (
     <Button
       onClick={() => {

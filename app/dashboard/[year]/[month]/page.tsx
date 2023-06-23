@@ -30,7 +30,7 @@ export default async function Dashboard({
       </div>
 
       {/* <pre className="whitespace-pre">{JSON.stringify(view)} prisma</pre> */}
-      <pre className="whitespace-pre">{JSON.stringify(user, null, 2)}</pre>
+      {/* <pre className="whitespace-pre">{JSON.stringify(user, null, 2)}</pre> */}
 
       {view ? (
         <Calendar view={view} month={parseInt(month)} year={parseInt(year)} />

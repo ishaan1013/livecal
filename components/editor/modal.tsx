@@ -30,9 +30,6 @@ export default function Modal(props: DataProps | Empty) {
 
   const onOpenChange = (open: boolean) => {
     if (!open) {
-      // const revalidateDash =
-      //   "/dashboard/" + path.split("-").slice(0, 2).join("/");
-      // revalidatePath(revalidateDash);
       router.back();
     }
   };
