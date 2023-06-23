@@ -1,6 +1,7 @@
 import Modal from "@/components/editor/modal";
 import { setupView } from "@/lib/data";
 import { setupDate } from "@/lib/data";
+import { auth } from "@clerk/nextjs";
 
 export default async function EditorModal({
   params,
@@ -23,7 +24,18 @@ export default async function EditorModal({
 
   // validate route
 
-  const view = await setupView({ month: dateParts[1], year: dateParts[0] });
+  const user = auth();
+
+  if (user === undefined) {
+    console.log("user is undefined");
+    return <Modal empty dateString={dateString} path={id} />;
+  }
+
+  const view = await setupView({
+    month: dateParts[1],
+    year: dateParts[0],
+    user,
+  });
   const dateData = await setupDate({
     day: dateParts[2],
     month: dateParts[1],
@@ -31,5 +43,12 @@ export default async function EditorModal({
     view,
   });
 
-  return <Modal dateData={dateData} dateString={dateString} path={id} />;
+  return (
+    <Modal
+      empty={false}
+      dateData={dateData}
+      dateString={dateString}
+      path={id}
+    />
+  );
 }

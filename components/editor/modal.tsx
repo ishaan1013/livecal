@@ -10,36 +10,56 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 import AddButton from "./addButton";
 
-export default function Modal({
-  dateString,
-  dateData,
-  path,
-}: {
+type Empty = {
+  empty: true;
+  dateString: string;
+  path: string;
+};
+
+type DataProps = {
+  empty: false;
   dateString: string;
   dateData: Date & {
     tasks: Task[];
   };
   path: string;
-}) {
+};
+
+export default function Modal(props: DataProps | Empty) {
   const router = useRouter();
 
   const onOpenChange = (open: boolean) => {
     if (!open) {
-      const revalidateDash =
-        "/dashboard/" + path.split("-").slice(0, 2).join("/");
-      console.log("routing back");
-      router.back();
-      // console.log("reval path", revalidateDash);
+      // const revalidateDash =
+      //   "/dashboard/" + path.split("-").slice(0, 2).join("/");
       // revalidatePath(revalidateDash);
+      router.back();
     }
   };
+
+  const { dateString, path, empty } = props;
+
+  if (empty)
+    return (
+      <Dialog open onOpenChange={onOpenChange}>
+        <DialogContent className="bg-muted">
+          <div className="w-full flex items-center flex-col">
+            <EditorWrapper modal dateString={dateString}>
+              <div>NOT SIGNED IN</div>
+            </EditorWrapper>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+
+  const data = props.dateData;
 
   return (
     <Dialog open onOpenChange={onOpenChange}>
       <DialogContent className="bg-muted">
         <div className="w-full flex items-center flex-col">
           <EditorWrapper modal dateString={dateString}>
-            {dateData.tasks.map((task) => (
+            {data.tasks.map((task) => (
               <Item
                 key={task.id}
                 path={path}
@@ -50,7 +70,7 @@ export default function Modal({
               />
             ))}
 
-            <AddButton path={path} dateId={dateData.id} />
+            <AddButton path={path} dateId={data.id} />
             {/* <pre className="text-xs whitespace-pre">
               {JSON.stringify(dateData, null, 2)}
             </pre> */}

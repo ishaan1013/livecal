@@ -13,7 +13,7 @@
     "@clerk/themes": "^1.7.3",
     "@liveblocks/client": "^1.0.9",
     "@liveblocks/zustand": "^1.0.9",
-    "@prisma/client": "^4.15.0",
+    "@prisma/client": "^4.16.1",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-select": "^1.2.2",
@@ -38,6 +38,6 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
-    "prisma": "^4.15.0"
+    "prisma": "^4.16.1"
   }
 }

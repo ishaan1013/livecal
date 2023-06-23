@@ -4,7 +4,7 @@ import DateBox from "./dateBox";
 
 import { Date, MonthView, Task } from "@prisma/client";
 import { daysInMonth, emptyEndDays, emptyStartDays } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 

@@ -16,15 +16,17 @@ export default async function Dashboard({
   const { month, year } = params;
 
   const user = auth();
+  const org = user.orgId;
 
   validateRoute(params);
-  const view = await setupView(params);
+
+  const view = await setupView({ ...params, user });
 
   return (
     <div className="w-screen p-8 bg-muted flex-grow flex flex-col">
       <div className="flex w-full justify-between items-center">
         <DateSelect month={parseInt(month)} year={parseInt(year)} />
-        <div className="bg-background w-9 rounded-full h-9" />
+        {org ? <div className="bg-background w-9 rounded-full h-9" /> : null}
       </div>
 
       {/* <pre className="whitespace-pre">{JSON.stringify(view)} prisma</pre> */}

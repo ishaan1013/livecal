@@ -9,9 +9,10 @@ generator client {
 }
 
 model MonthView {
-  id        String @unique @default(uuid())
+  id        String  @unique @default(uuid())
   monthYear String
   user      String
+  org       Boolean @default(false)
 
   dates Date[]
 
