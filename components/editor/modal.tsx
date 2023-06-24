@@ -9,6 +9,7 @@ import EditorWrapper from ".";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 import AddButton from "./addButton";
+import Items from "./items";
 
 type Empty = {
   empty: true;
@@ -56,7 +57,8 @@ export default function Modal(props: DataProps | Empty) {
       <DialogContent className="bg-muted">
         <div className="w-full flex items-center flex-col">
           <EditorWrapper modal dateString={dateString}>
-            {data.tasks.map((task) => (
+            <Items data={data} path={path} />
+            {/* {data.tasks.map((task) => (
               <Item
                 key={task.id}
                 path={path}
@@ -65,7 +67,7 @@ export default function Modal(props: DataProps | Empty) {
                 label={task.label}
                 check={task.checked}
               />
-            ))}
+            ))} */}
 
             <AddButton path={path} dateId={data.id} />
             {/* <pre className="text-xs whitespace-pre">

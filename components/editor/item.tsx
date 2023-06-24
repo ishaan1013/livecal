@@ -23,12 +23,16 @@ export default function Item({
   label,
   itemId,
   check,
+  editLock,
+  setEditLock,
 }: {
   path: string;
   text: string;
   label: Label;
   itemId: string;
   check: boolean;
+  editLock: boolean;
+  setEditLock: (editLock: boolean) => void;
 }) {
   let [isPending, startTransition] = useTransition();
 
@@ -57,7 +61,9 @@ export default function Item({
 
     if (newState) {
       setOldValue(value);
+      setEditLock(true);
     } else {
+      setEditLock(false);
       if (value && value.length !== 0 && value !== oldValue) {
         startTransition(() => updateTask(itemId, value));
       } else {
@@ -90,8 +96,11 @@ export default function Item({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             disabled={!editing}
-            style={checked ? { textDecorationLine: "line-through" } : {}}
-            className="bg-transparent max-w-[200px] text-ellipsis whitespace-nowrap overflow-hidden py-[1px] border-y-2 border-transparent outline-none focus:border-b-accent-foreground"
+            style={{
+              textDecorationLine: checked ? "line-through" : "none",
+              borderBottomColor: editing ? "#555555" : "transparent",
+            }}
+            className="bg-transparent max-w-[200px] text-ellipsis whitespace-nowrap overflow-hidden py-[1px] border-y-2 border-transparent outline-none"
           />
         </div>
         <div className="flex items-center space-x-2">
@@ -99,7 +108,7 @@ export default function Item({
             onClick={handleEdit}
             size={"sm"}
             className="px-2"
-            disabled={checked}
+            disabled={checked || (!editing && editLock)}
             variant={"secondary"}
           >
             {editing ? (

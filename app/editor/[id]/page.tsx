@@ -1,5 +1,6 @@
 import AddButton from "@/components/editor/addButton";
 import Item from "@/components/editor/item";
+import Items from "@/components/editor/items";
 import { setupDate, setupView } from "@/lib/data";
 import { auth } from "@clerk/nextjs";
 
@@ -27,7 +28,7 @@ export default async function Editor({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {dateData.tasks.map((task) => (
+      {/* {dateData.tasks.map((task) => (
         <Item
           key={task.id}
           path={id}
@@ -36,7 +37,9 @@ export default async function Editor({ params }: { params: { id: string } }) {
           label={task.label}
           check={task.checked}
         />
-      ))}
+      ))} */}
+
+      <Items data={dateData} path={id} />
 
       <AddButton path={id} dateId={dateData.id} />
     </>
