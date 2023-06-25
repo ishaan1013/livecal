@@ -1,5 +1,4 @@
 import AddButton from "@/components/editor/addButton";
-import Item from "@/components/editor/item";
 import Items from "@/components/editor/items";
 import { setupDate, setupView } from "@/lib/data";
 import { auth } from "@clerk/nextjs";

@@ -32,6 +32,7 @@ export default function Modal(props: DataProps | Empty) {
   const onOpenChange = (open: boolean) => {
     if (!open) {
       router.back();
+      router.refresh();
     }
   };
 

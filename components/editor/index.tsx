@@ -5,6 +5,9 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import useStore from "@/lib/state";
+import { useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
 
 export default function EditorWrapper({
   modal,
@@ -15,6 +18,24 @@ export default function EditorWrapper({
   dateString: string;
   children: React.ReactNode;
 }) {
+  const {
+    liveblocks: { enterRoom, leaveRoom },
+  } = useStore();
+
+  const { isLoaded, isSignedIn, user } = useUser();
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return;
+    // add user data to live store
+
+    enterRoom("room-id");
+    return () => {
+      leaveRoom("room-id");
+    };
+  }, [enterRoom, leaveRoom, user]);
+
+  const others = useStore((state) => state.liveblocks.others);
+
   return (
     <>
       <div className="flex w-full justify-between items-center">
@@ -35,9 +56,10 @@ export default function EditorWrapper({
           )}
           <div className="text-xl font-semibold">{dateString}</div>
         </div>
-        <div className="space-x-2 flex items-center">
+        <div className="text-xs text-green-900">{JSON.stringify(others)}</div>
+        {/* <div className="space-x-2 flex items-center">
           <div className="bg-background w-9 rounded-full h-9" />
-        </div>
+        </div> */}
       </div>
 
       <div className="w-full space-y-2 max-w-screen-sm mt-6">{children}</div>
