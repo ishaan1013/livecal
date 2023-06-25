@@ -19,7 +19,7 @@ export const setupDate = async ({
 }) => {
   const user = auth();
 
-  console.log("existing dates: ", view.dates);
+  // console.log("existing dates: ", view.dates);
 
   const existingDate = view.dates.find((date) => date.day === parseInt(day));
   if (existingDate) {

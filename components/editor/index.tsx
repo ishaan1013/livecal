@@ -5,9 +5,10 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import useStore from "@/lib/state";
+import useStore, { User } from "@/lib/state";
 import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
+import Avatar from "./avatar";
 
 export default function EditorWrapper({
   modal,
@@ -21,6 +22,7 @@ export default function EditorWrapper({
   const {
     liveblocks: { enterRoom, leaveRoom },
   } = useStore();
+  const setUserData = useStore((state) => state.setUserData);
 
   const { isLoaded, isSignedIn, user } = useUser();
 
@@ -28,7 +30,16 @@ export default function EditorWrapper({
     if (!isLoaded || !isSignedIn) return;
     // add user data to live store
 
+    console.log();
+
+    setUserData({
+      id: user.id,
+      name: user.fullName,
+      image: user.profileImageUrl,
+    });
+
     enterRoom("room-id");
+
     return () => {
       leaveRoom("room-id");
     };
@@ -56,10 +67,19 @@ export default function EditorWrapper({
           )}
           <div className="text-xl font-semibold">{dateString}</div>
         </div>
-        <div className="text-xs text-green-900">{JSON.stringify(others)}</div>
-        {/* <div className="space-x-2 flex items-center">
-          <div className="bg-background w-9 rounded-full h-9" />
-        </div> */}
+        {others.map(({ connectionId, presence }) => {
+          const userData = presence?.userData as User;
+          if (!userData.name || !userData.image) return null;
+          return (
+            <Avatar
+              name={userData.name}
+              key={userData.id}
+              src={userData.image}
+              color={"red"}
+            />
+          );
+        })}
+        {/* <div className="text-xs text-green-900">{JSON.stringify(others)}</div> */}
       </div>
 
       <div className="w-full space-y-2 max-w-screen-sm mt-6">{children}</div>

@@ -12,7 +12,7 @@ export const setupView = async (params: {
 }) => {
   const { month, year, user } = params;
 
-  console.log("user: ", user);
+  // console.log("user: ", user);
 
   // if (user?.userId) {
   const org = user.orgId === undefined || user.orgId === null ? false : true;
