@@ -9,28 +9,41 @@ import useStore, { User } from "@/lib/state";
 import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import Avatar from "./avatar";
+import { Date, Task } from "@prisma/client";
 
-export default function EditorWrapper({
-  modal,
-  dateString,
-  children,
-}: {
+type Empty = {
   modal?: boolean;
   dateString: string;
   children: React.ReactNode;
-}) {
+  empty: true;
+};
+
+type Props = {
+  modal?: boolean;
+  dateString: string;
+  children: React.ReactNode;
+  data: Date & {
+    tasks: Task[];
+  };
+  roomId: string;
+  empty: false;
+};
+
+export default function EditorWrapper(props: Empty | Props) {
+  const { modal, dateString, empty, children } = props;
+
   const {
     liveblocks: { enterRoom, leaveRoom },
   } = useStore();
+
   const setUserData = useStore((state) => state.setUserData);
+  const setTasks = useStore((state) => state.setTasks);
+  const setDateId = useStore((state) => state.setDateId);
 
   const { isLoaded, isSignedIn, user } = useUser();
 
   useEffect(() => {
-    if (!isLoaded || !isSignedIn) return;
-    // add user data to live store
-
-    console.log();
+    if (empty || !isLoaded || !isSignedIn) return;
 
     setUserData({
       id: user.id,
@@ -38,10 +51,13 @@ export default function EditorWrapper({
       image: user.profileImageUrl,
     });
 
-    enterRoom("room-id");
+    enterRoom(props.roomId);
+
+    setTasks(props.data.tasks);
+    setDateId(props.data.id);
 
     return () => {
-      leaveRoom("room-id");
+      leaveRoom(props.roomId);
     };
   }, [enterRoom, leaveRoom, user]);
 
@@ -67,18 +83,19 @@ export default function EditorWrapper({
           )}
           <div className="text-xl font-semibold">{dateString}</div>
         </div>
-        {others.map(({ connectionId, presence }) => {
-          const userData = presence?.userData as User;
-          if (!userData.name || !userData.image) return null;
-          return (
-            <Avatar
-              name={userData.name}
-              key={userData.id}
-              src={userData.image}
-              color={"red"}
-            />
-          );
-        })}
+        {!empty &&
+          others.map(({ connectionId, presence }) => {
+            const userData = presence?.userData as User;
+            if (!userData.name || !userData.image) return null;
+            return (
+              <Avatar
+                name={userData.name}
+                key={userData.id}
+                src={userData.image}
+                color={"red"}
+              />
+            );
+          })}
         {/* <div className="text-xs text-green-900">{JSON.stringify(others)}</div> */}
       </div>
 

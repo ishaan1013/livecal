@@ -3,6 +3,7 @@ import { createClient } from "@liveblocks/client";
 import { liveblocks } from "@liveblocks/zustand";
 import type { WithLiveblocks } from "@liveblocks/zustand";
 import { Label } from "@prisma/client";
+import { devtools, persist } from "zustand/middleware";
 
 export type User = {
   name: string | null | undefined;
@@ -10,7 +11,7 @@ export type User = {
   id: string;
 };
 
-type Task = {
+export type Task = {
   id: string;
   text: string;
   checked: boolean;
@@ -23,6 +24,8 @@ type State = {
   setUserData: (userData: User) => void;
   tasks: Task[];
   setTasks: (task: Task[]) => void;
+  dateId: string;
+  setDateId: (dateId: string) => void;
 };
 
 const client = createClient({
@@ -38,9 +41,11 @@ const useStore = create<WithLiveblocks<State>>()(
         id: "",
       },
       tasks: [],
+      dateId: "",
 
       setUserData: (userData) => set({ userData }),
       setTasks: (tasks) => set({ tasks }),
+      setDateId: (dateId) => set({ dateId }),
     }),
     {
       client,
@@ -49,6 +54,7 @@ const useStore = create<WithLiveblocks<State>>()(
       },
       storageMapping: {
         tasks: true,
+        dateId: true,
       },
     }
   )

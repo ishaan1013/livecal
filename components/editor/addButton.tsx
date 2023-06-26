@@ -2,17 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { createTask } from "@/lib/actions";
+import useStore from "@/lib/state";
 import { Plus } from "lucide-react";
 import { useTransition } from "react";
 
-export default function AddButton({
-  path,
-  dateId,
-}: {
-  path: string;
-  dateId: string;
-}) {
+export default function AddButton({ path }: { path: string }) {
   const [isPending, startTransition] = useTransition();
+  const dateId = useStore((state) => state.dateId);
 
   return (
     <Button

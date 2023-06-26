@@ -1,10 +1,12 @@
 import EditorWrapper from "@/components/editor";
+import { setupDate, setupView } from "@/lib/data";
+import { auth } from "@clerk/nextjs";
 // import Item from "@/components/editor/item";
 // import { Button } from "@/components/ui/button";
 // import { ChevronLeft } from "lucide-react";
 // import Link from "next/link";
 
-export default function EditorLayout({
+export default async function EditorLayout({
   params,
   children,
 }: {
@@ -25,9 +27,33 @@ export default function EditorLayout({
     day: "numeric",
   });
 
+  const user = auth();
+
+  if (user === undefined) return <div>NOT SIGNED IN</div>;
+
+  const view = await setupView({
+    month: dateParts[1],
+    year: dateParts[0],
+    user,
+  });
+
+  const dateData = await setupDate({
+    day: dateParts[2],
+    month: dateParts[1],
+    year: dateParts[0],
+    view,
+  });
+
   return (
     <div className="w-screen min-h-screen p-8 bg-muted flex-grow flex items-center flex-col">
-      <EditorWrapper dateString={dateString}>{children}</EditorWrapper>
+      <EditorWrapper
+        roomId={id}
+        empty={false}
+        data={dateData}
+        dateString={dateString}
+      >
+        {children}
+      </EditorWrapper>
     </div>
   );
 }

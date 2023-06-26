@@ -5,25 +5,23 @@ import { auth } from "@clerk/nextjs";
 
 export default async function Editor({ params }: { params: { id: string } }) {
   const { id } = params;
-  const dateParts = id.split("-");
+  // const dateParts = id.split("-");
 
-  // validate route
+  // const user = auth();
 
-  const user = auth();
+  // if (user === undefined) return <div>NOT SIGNED IN</div>;
 
-  if (user === undefined) return <div>NOT SIGNED IN</div>;
-
-  const view = await setupView({
-    month: dateParts[1],
-    year: dateParts[0],
-    user,
-  });
-  const dateData = await setupDate({
-    day: dateParts[2],
-    month: dateParts[1],
-    year: dateParts[0],
-    view,
-  });
+  // const view = await setupView({
+  //   month: dateParts[1],
+  //   year: dateParts[0],
+  //   user,
+  // });
+  // const dateData = await setupDate({
+  //   day: dateParts[2],
+  //   month: dateParts[1],
+  //   year: dateParts[0],
+  //   view,
+  // });
 
   return (
     <>
@@ -38,9 +36,9 @@ export default async function Editor({ params }: { params: { id: string } }) {
         />
       ))} */}
 
-      <Items data={dateData} path={id} />
+      <Items path={id} />
 
-      <AddButton path={id} dateId={dateData.id} />
+      <AddButton path={id} />
     </>
   );
 }

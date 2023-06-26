@@ -43,7 +43,7 @@ export default function Modal(props: DataProps | Empty) {
       <Dialog open onOpenChange={onOpenChange}>
         <DialogContent className="bg-muted">
           <div className="w-full flex items-center flex-col">
-            <EditorWrapper modal dateString={dateString}>
+            <EditorWrapper empty={true} modal dateString={dateString}>
               <div>NOT SIGNED IN</div>
             </EditorWrapper>
           </div>
@@ -57,8 +57,14 @@ export default function Modal(props: DataProps | Empty) {
     <Dialog open onOpenChange={onOpenChange}>
       <DialogContent className="bg-muted">
         <div className="w-full flex items-center flex-col">
-          <EditorWrapper modal dateString={dateString}>
-            <Items data={data} path={path} />
+          <EditorWrapper
+            empty={false}
+            data={data}
+            roomId={path}
+            modal
+            dateString={dateString}
+          >
+            <Items path={path} />
             {/* {data.tasks.map((task) => (
               <Item
                 key={task.id}
@@ -70,7 +76,7 @@ export default function Modal(props: DataProps | Empty) {
               />
             ))} */}
 
-            <AddButton path={path} dateId={data.id} />
+            <AddButton path={path} />
             {/* <pre className="text-xs whitespace-pre">
               {JSON.stringify(dateData, null, 2)}
             </pre> */}
