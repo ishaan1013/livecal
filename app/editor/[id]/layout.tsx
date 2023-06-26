@@ -37,6 +37,8 @@ export default async function EditorLayout({
     user,
   });
 
+  const viewId = id + " " + (user.orgId ?? user.userId);
+
   const dateData = await setupDate({
     day: dateParts[2],
     month: dateParts[1],
@@ -47,7 +49,7 @@ export default async function EditorLayout({
   return (
     <div className="w-screen min-h-screen p-8 bg-muted flex-grow flex items-center flex-col">
       <EditorWrapper
-        roomId={id}
+        roomId={viewId}
         empty={false}
         data={dateData}
         dateString={dateString}

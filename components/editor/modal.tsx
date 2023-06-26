@@ -24,6 +24,7 @@ type DataProps = {
     tasks: Task[];
   };
   path: string;
+  roomId: string;
 };
 
 export default function Modal(props: DataProps | Empty) {
@@ -52,6 +53,7 @@ export default function Modal(props: DataProps | Empty) {
     );
 
   const data = props.dateData;
+  const roomId = props.roomId;
 
   return (
     <Dialog open onOpenChange={onOpenChange}>
@@ -60,7 +62,7 @@ export default function Modal(props: DataProps | Empty) {
           <EditorWrapper
             empty={false}
             data={data}
-            roomId={path}
+            roomId={roomId}
             modal
             dateString={dateString}
           >

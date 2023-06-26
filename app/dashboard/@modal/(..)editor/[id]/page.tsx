@@ -49,6 +49,7 @@ export default async function EditorModal({
       dateData={dateData}
       dateString={dateString}
       path={id}
+      roomId={id + " " + (user.orgId ?? user.userId)}
     />
   );
 }
