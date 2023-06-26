@@ -26,9 +26,7 @@ type State = {
 };
 
 const client = createClient({
-  // publicApiKey: process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY as string,
-  publicApiKey:
-    "pk_dev_GF7vYlDtaamSZKvpKgHOlx-ESW_yr-VXXSi9M_zbJA1llG5woG-jcxGzpu0Gfsd0",
+  publicApiKey: process.env.NEXT_PUBLIC_LIVEBLOCKS_PUBLIC_KEY as string,
 });
 
 const useStore = create<WithLiveblocks<State>>()(
