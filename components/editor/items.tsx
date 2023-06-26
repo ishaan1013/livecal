@@ -2,7 +2,8 @@
 
 import { Date, Task } from "@prisma/client";
 import Item from "./item";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useStore from "@/lib/state";
 
 export default function Items({
   path,
@@ -15,9 +16,26 @@ export default function Items({
 }) {
   const [editLock, setEditLock] = useState(false);
 
+  const tasks = useStore((state) => state.tasks);
+  const setTasks = useStore((state) => state.setTasks);
+
+  useEffect(() => {
+    console.log("setting tasks:", data.tasks);
+    setTasks(data.tasks);
+
+    return () => {
+      setTasks([]);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("tasks:", tasks);
+    // setTasks(tasks);
+  }, [tasks]);
+
   return (
     <>
-      {data.tasks.map((task) => (
+      {tasks.map((task) => (
         <Item
           key={task.id}
           path={path}
