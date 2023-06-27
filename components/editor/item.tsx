@@ -16,6 +16,7 @@ import {
 import { Check, Pencil, Trash } from "lucide-react";
 import { Label } from "@prisma/client";
 import { checkTask, deleteTask, relabelTask, updateTask } from "@/lib/actions";
+import useStore from "@/lib/state";
 
 export default function Item({
   path,
@@ -35,6 +36,11 @@ export default function Item({
   setEditLock: (editLock: boolean) => void;
 }) {
   let [isPending, startTransition] = useTransition();
+
+  const checkTaskZ = useStore((state) => state.checkTask);
+  const renameTaskZ = useStore((state) => state.renameTask);
+  const relabelTaskZ = useStore((state) => state.changeLabel);
+  const deleteTaskZ = useStore((state) => state.deleteTask);
 
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(text);
@@ -65,6 +71,7 @@ export default function Item({
     } else {
       setEditLock(false);
       if (value && value.length !== 0 && value !== oldValue) {
+        renameTaskZ(itemId, value);
         startTransition(() => updateTask(itemId, value));
       } else {
         setValue(oldValue);
@@ -76,11 +83,15 @@ export default function Item({
   const onCheckedChange = () => {
     const newState = !checked;
 
+    checkTaskZ(itemId, newState);
+
     startTransition(() => checkTask(itemId, newState));
     setChecked((prev) => !prev);
   };
 
   const onLabelChange = (label: Label) => {
+    relabelTaskZ(itemId, label);
+
     startTransition(() => relabelTask(itemId, label));
 
     setLabelValue(label);
@@ -152,6 +163,7 @@ export default function Item({
           <Button
             onClick={() => {
               setValue("Deleting...");
+              deleteTaskZ(itemId);
               startTransition(() => deleteTask(path, itemId));
             }}
             size={"sm"}
