@@ -4,11 +4,12 @@ import { revalidatePath } from "next/cache";
 import prisma from "../prisma";
 import { Label } from "@prisma/client";
 
-export async function createTask(path: string, dateId: string) {
+export async function createTask(id: string, path: string, dateId: string) {
   console.log("created");
 
   await prisma.task.create({
     data: {
+      id: id,
       text: "New Task",
       checked: false,
       dateId,
