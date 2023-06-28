@@ -1,9 +1,32 @@
 "use client";
 
-import { useViewStore } from "@/lib/state/view";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import Link from "next/link";
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const toToday = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = (d.getMonth() + 1).toString().padStart(2, "0");
+
+  return `/dashboard/${year}/${month}`;
+};
 
 export default function DateSelect({
   month,
@@ -12,27 +35,9 @@ export default function DateSelect({
   month: number;
   year: number;
 }) {
-  // const month = useViewStore((state) => state.month);
-  // const year = useViewStore((state) => state.year);
-  // const setMonth = useViewStore((state) => state.setMonth);
-  // const setYear = useViewStore((state) => state.setYear);
-
   const router = useRouter();
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const todayLink = toToday();
 
   const handleMinus = () => {
     if (month === 1) {
@@ -87,7 +92,7 @@ export default function DateSelect({
         <ChevronRight className="w-5 h-5" />
       </button>
       <Button variant="ghost" size="sm">
-        Today
+        <Link href={todayLink}>Today</Link>
       </Button>
     </div>
   );
