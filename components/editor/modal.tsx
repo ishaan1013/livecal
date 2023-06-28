@@ -1,10 +1,8 @@
 "use client";
 
 import { Date, Task } from "@prisma/client";
-import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 
-import Item from "./item";
 import EditorWrapper from ".";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
@@ -25,6 +23,7 @@ type DataProps = {
   };
   path: string;
   roomId: string;
+  org: boolean;
 };
 
 export default function Modal(props: DataProps | Empty) {
@@ -54,6 +53,7 @@ export default function Modal(props: DataProps | Empty) {
 
   const data = props.dateData;
   const roomId = props.roomId;
+  const org = props.org;
 
   return (
     <Dialog open onOpenChange={onOpenChange}>
@@ -63,6 +63,7 @@ export default function Modal(props: DataProps | Empty) {
             empty={false}
             data={data}
             roomId={roomId}
+            org={org}
             modal
             dateString={dateString}
           >

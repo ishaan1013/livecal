@@ -27,6 +27,7 @@ type Props = {
   };
   roomId: string;
   empty: false;
+  org: boolean;
 };
 
 export default function EditorWrapper(props: Empty | Props) {
@@ -44,6 +45,13 @@ export default function EditorWrapper(props: Empty | Props) {
 
   useEffect(() => {
     if (empty || !isLoaded || !isSignedIn) return;
+
+    if (!props.org) {
+      setTasks(props.data.tasks);
+      setDateId(props.data.id);
+
+      return;
+    }
 
     setUserData({
       id: user.id,

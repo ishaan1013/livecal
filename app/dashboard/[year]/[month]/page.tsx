@@ -24,7 +24,9 @@ export default async function Dashboard({
 
   return (
     <div className="w-screen p-8 bg-muted flex-grow flex flex-col">
-      <DateSelect month={parseInt(month)} year={parseInt(year)} />
+      <div className="flex w-full justify-start items-center">
+        <DateSelect month={parseInt(month)} year={parseInt(year)} />
+      </div>
 
       {/* <pre className="whitespace-pre">{JSON.stringify(view)} prisma</pre> */}
       {/* <pre className="whitespace-pre">{JSON.stringify(user, null, 2)}</pre> */}

@@ -52,6 +52,7 @@ export default async function EditorLayout({
         roomId={viewId}
         empty={false}
         data={dateData}
+        org={user.orgId ? true : false}
         dateString={dateString}
       >
         {children}
