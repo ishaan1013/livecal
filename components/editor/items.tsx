@@ -55,9 +55,9 @@ export default function Items({ path }: { path: string }) {
           />
         );
       })}
-      <div className="text-xs whitespace-pre">
+      {/* <div className="text-xs whitespace-pre">
         {JSON.stringify(tasks, null, 4)}
-      </div>
+      </div> */}
     </>
   );
 }
