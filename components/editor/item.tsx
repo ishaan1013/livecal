@@ -61,7 +61,11 @@ export default function Item({
     }
   }, [editing]);
 
-  const [checked, setChecked] = useState(check);
+  useEffect(() => {
+    if (!editing) {
+      setValue(text);
+    }
+  }, [text]);
 
   const pendingClass = isPending
     ? "opacity-30 duration-200 pointer-events-none cursor-progress"
@@ -101,7 +105,7 @@ export default function Item({
         : "bg-pink-600")
     : "duration-200 opacity-0 py-1 px-2 -top-4 rounded left-2 absolute";
 
-  const [labelValue, setLabelValue] = useState<Label>(label);
+  // const [labelValue, setLabelValue] = useState<Label>(label);
 
   const handleEdit = () => {
     const newState = !editing;
@@ -124,12 +128,12 @@ export default function Item({
   };
 
   const onCheckedChange = () => {
-    const newState = !checked;
+    const newState = !check;
 
     checkTaskZ(itemId, newState);
 
     startTransition(() => checkTask(itemId, newState));
-    setChecked((prev) => !prev);
+    // setChecked((prev) => !prev);
   };
 
   const onLabelChange = (label: Label) => {
@@ -137,7 +141,7 @@ export default function Item({
 
     startTransition(() => relabelTask(itemId, label));
 
-    setLabelValue(label);
+    // setLabelValue(label);
   };
 
   return (
@@ -145,14 +149,14 @@ export default function Item({
       <CardContent className="flex items-center relative justify-between p-2">
         <div className={nameClass}>{selected ? selected[0] : null}</div>
         <div className="flex items-center space-x-3 pl-1.5">
-          <Checkbox checked={checked} onCheckedChange={onCheckedChange} />
+          <Checkbox checked={check} onCheckedChange={onCheckedChange} />
           <input
             ref={valueRef}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             disabled={!editing}
             style={{
-              textDecorationLine: checked ? "line-through" : "none",
+              textDecorationLine: check ? "line-through" : "none",
               borderBottomColor: editing ? "#555555" : "transparent",
             }}
             className="bg-transparent max-w-[200px] text-ellipsis whitespace-nowrap overflow-hidden py-[1px] border-y-2 border-transparent outline-none"
@@ -165,7 +169,7 @@ export default function Item({
             size={"sm"}
             className="px-2"
             disabled={
-              checked || (!editing && editLock) || selected ? true : false
+              check || (!editing && editLock) || selected ? true : false
             }
             variant={"secondary"}
           >
@@ -175,11 +179,7 @@ export default function Item({
               <Pencil className="w-4 h-4" />
             )}
           </Button>
-          <Select
-            disabled={checked}
-            value={labelValue}
-            onValueChange={onLabelChange}
-          >
+          <Select disabled={check} value={label} onValueChange={onLabelChange}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>

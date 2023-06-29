@@ -56,7 +56,7 @@ export default function Items({ path }: { path: string }) {
         );
       })}
       <div className="text-xs whitespace-pre">
-        {JSON.stringify(others, null, 4)}
+        {JSON.stringify(tasks, null, 4)}
       </div>
     </>
   );
