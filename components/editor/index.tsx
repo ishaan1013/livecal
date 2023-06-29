@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import Avatar from "./avatar";
 import { Date, Task } from "@prisma/client";
+import { getUserLabel } from "@/lib/utils";
 
 type Empty = {
   modal?: boolean;
@@ -57,6 +58,7 @@ export default function EditorWrapper(props: Empty | Props) {
       id: user.id,
       name: user.fullName,
       image: user.profileImageUrl,
+      label: getUserLabel(user.fullName ?? ""),
     });
 
     enterRoom(props.roomId);
@@ -100,7 +102,7 @@ export default function EditorWrapper(props: Empty | Props) {
                 name={userData.name}
                 key={userData.id}
                 src={userData.image}
-                color={"red"}
+                color={userData.label}
               />
             );
           })}

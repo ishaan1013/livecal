@@ -8,6 +8,7 @@ export type User = {
   name: string | null | undefined;
   image: string | null | undefined;
   id: string;
+  label: Label;
 };
 
 export type Task = {
@@ -45,6 +46,7 @@ const useStore = create<WithLiveblocks<State>>()(
         name: null,
         image: null,
         id: "",
+        label: "RED",
       },
       selected: "",
 

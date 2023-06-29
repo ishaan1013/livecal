@@ -3,20 +3,20 @@ import Image from "next/image";
 type Props = {
   src: string;
   name: string;
-  color: "red" | "orange" | "yellow" | "green" | "blue" | "purple" | "pink";
+  color: "RED" | "ORANGE" | "YELLOW" | "GREEN" | "BLUE" | "PURPLE" | "PINK";
 };
 
 export default function Avatar(props: Props) {
   const { src, name, color } = props;
 
   const colorStyle = {
-    red: "bg-red-500 p-0.5 rounded-full",
-    orange: "bg-orange-500 p-0.5 rounded-full",
-    yellow: "bg-yellow-500 p-0.5 rounded-full",
-    green: "bg-green-500 p-0.5 rounded-full",
-    blue: "bg-blue-500 p-0.5 rounded-full",
-    purple: "bg-purple-500 p-0.5 rounded-full",
-    pink: "bg-pink-500 p-0.5 rounded-full",
+    RED: "bg-red-500 p-0.5 rounded-full",
+    ORANGE: "bg-orange-500 p-0.5 rounded-full",
+    YELLOW: "bg-yellow-500 p-0.5 rounded-full",
+    GREEN: "bg-green-500 p-0.5 rounded-full",
+    BLUE: "bg-blue-500 p-0.5 rounded-full",
+    PURPLE: "bg-purple-500 p-0.5 rounded-full",
+    PINK: "bg-pink-500 p-0.5 rounded-full",
   };
 
   return (

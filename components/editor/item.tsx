@@ -17,25 +17,32 @@ import { Check, Pencil, Trash } from "lucide-react";
 import { Label } from "@prisma/client";
 import { checkTask, deleteTask, relabelTask, updateTask } from "@/lib/actions";
 import useStore from "@/lib/state";
+import { cn } from "@/lib/utils";
 
 export default function Item({
   path,
+  id,
   text,
   label,
   itemId,
   check,
   editLock,
   setEditLock,
+  selected,
 }: {
   path: string;
+  id: string;
   text: string;
   label: Label;
   itemId: string;
   check: boolean;
   editLock: boolean;
   setEditLock: (editLock: boolean) => void;
+  selected: string[] | null;
 }) {
   let [isPending, startTransition] = useTransition();
+
+  const setSelected = useStore((state) => state.setSelected);
 
   const checkTaskZ = useStore((state) => state.checkTask);
   const renameTaskZ = useStore((state) => state.renameTask);
@@ -56,9 +63,43 @@ export default function Item({
 
   const [checked, setChecked] = useState(check);
 
-  const cardClass = isPending
+  const pendingClass = isPending
     ? "opacity-30 duration-200 pointer-events-none cursor-progress"
     : "opacity-100 duration-200";
+  const selectedClass = selected
+    ? "ring-2 ring-offset-2 " +
+      (selected[1] === "RED"
+        ? "ring-red-500/70 ring-offset-muted/70"
+        : selected[1] === "ORANGE"
+        ? "ring-orange-500/70 ring-offset-muted/70"
+        : selected[1] === "YELLOW"
+        ? "ring-yellow-500/70 ring-offset-muted/70"
+        : selected[1] === "GREEN"
+        ? "ring-green-500/70 ring-offset-muted/70"
+        : selected[1] === "BLUE"
+        ? "ring-blue-500/70 ring-offset-muted/70"
+        : selected[1] === "PURPLE"
+        ? "ring-purple-500/70 ring-offset-muted/70"
+        : "ring-pink-500/70 ring-offset-muted/70")
+    : "";
+  const cardClass = cn(pendingClass, selectedClass);
+
+  const nameClass = selected
+    ? "py-1 px-2 opacity-100 -top-4 rounded text-white font-medium text-xs left-2 absolute " +
+      (selected[1] === "RED"
+        ? "bg-red-600"
+        : selected[1] === "ORANGE"
+        ? "bg-orange-600"
+        : selected[1] === "YELLOW"
+        ? "bg-yellow-600"
+        : selected[1] === "GREEN"
+        ? "bg-green-600"
+        : selected[1] === "BLUE"
+        ? "bg-blue-600"
+        : selected[1] === "PURPLE"
+        ? "bg-purple-600"
+        : "bg-pink-600")
+    : "duration-200 opacity-0 py-1 px-2 -top-4 rounded left-2 absolute";
 
   const [labelValue, setLabelValue] = useState<Label>(label);
 
@@ -68,8 +109,10 @@ export default function Item({
     if (newState) {
       setOldValue(value);
       setEditLock(true);
+      setSelected(id);
     } else {
       setEditLock(false);
+      setSelected("");
       if (value && value.length !== 0 && value !== oldValue) {
         renameTaskZ(itemId, value);
         startTransition(() => updateTask(itemId, value));
@@ -99,7 +142,8 @@ export default function Item({
 
   return (
     <Card className={cardClass}>
-      <CardContent className="flex items-center justify-between p-2">
+      <CardContent className="flex items-center relative justify-between p-2">
+        <div className={nameClass}>{selected ? selected[0] : null}</div>
         <div className="flex items-center space-x-3 pl-1.5">
           <Checkbox checked={checked} onCheckedChange={onCheckedChange} />
           <input
@@ -115,11 +159,14 @@ export default function Item({
           />
         </div>
         <div className="flex items-center space-x-2">
+          {/* <div>{JSON.stringify(selected)}</div> */}
           <Button
             onClick={handleEdit}
             size={"sm"}
             className="px-2"
-            disabled={checked || (!editing && editLock)}
+            disabled={
+              checked || (!editing && editLock) || selected ? true : false
+            }
             variant={"secondary"}
           >
             {editing ? (

@@ -1,3 +1,4 @@
+import { Label } from "@prisma/client";
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -25,4 +26,19 @@ export function emptyEndDays(monthDays: number, startDays: number) {
 
   const res = base - monthDays - startDays;
   return res;
+}
+
+export function getUserLabel(user: string) {
+  const labels: Label[] = [
+    "RED",
+    "ORANGE",
+    "YELLOW",
+    "GREEN",
+    "BLUE",
+    "PURPLE",
+    "PINK",
+  ];
+
+  if (!user) return labels[0];
+  return labels[user.length % labels.length];
 }
