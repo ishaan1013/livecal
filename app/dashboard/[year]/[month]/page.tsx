@@ -23,7 +23,7 @@ export default async function Dashboard({
   const view = await setupView({ ...params, user });
 
   return (
-    <div className="w-screen p-8 bg-muted flex-grow flex flex-col">
+    <div className="w-screen md:px-8 xs:px-5 px-3 md:py-8 xs:py-6 py-5 bg-muted flex-grow flex flex-col">
       <div className="flex w-full justify-start items-center">
         <DateSelect month={parseInt(month)} year={parseInt(year)} />
       </div>

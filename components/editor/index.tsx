@@ -90,7 +90,7 @@ export default function EditorWrapper(props: Empty | Props) {
               </Link>
             </Button>
           )}
-          <div className="text-xl font-semibold">{dateString}</div>
+          <div className="text-xl font-bold">{dateString}</div>
         </div>
         {!empty &&
           others.map(({ connectionId, presence }) => {

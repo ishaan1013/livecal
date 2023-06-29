@@ -82,7 +82,7 @@ export default function DateSelect({
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
-      <div className="text-xl font-semibold">
+      <div className="text-xl font-bold">
         {months[month - 1]} {year}
       </div>
       <button

@@ -148,7 +148,7 @@ export default function Item({
     <Card className={cardClass}>
       <CardContent className="flex items-center relative justify-between p-2">
         <div className={nameClass}>{selected ? selected[0] : null}</div>
-        <div className="flex items-center space-x-3 pl-1.5">
+        <div className="flex items-center xs:space-x-3 space-x-1.5 pl-1.5">
           <Checkbox checked={check} onCheckedChange={onCheckedChange} />
           <input
             ref={valueRef}
@@ -159,10 +159,10 @@ export default function Item({
               textDecorationLine: check ? "line-through" : "none",
               borderBottomColor: editing ? "#555555" : "transparent",
             }}
-            className="bg-transparent max-w-[200px] text-ellipsis whitespace-nowrap overflow-hidden py-[1px] border-y-2 border-transparent outline-none"
+            className="bg-transparent sm:text-base text-sm sm:w-[200px] xs:w-[120px] w-[80px] text-ellipsis whitespace-nowrap overflow-hidden py-[1px] border-y-2 border-transparent outline-none"
           />
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center xs:space-x-2 space-x-1">
           {/* <div>{JSON.stringify(selected)}</div> */}
           <Button
             onClick={handleEdit}
@@ -174,9 +174,9 @@ export default function Item({
             variant={"secondary"}
           >
             {editing ? (
-              <Check className="w-4 h-4" />
+              <Check className="w-3 h-3 sm:w-4 sm:h-4" />
             ) : (
-              <Pencil className="w-4 h-4" />
+              <Pencil className="w-3 h-3 sm:w-4 sm:h-4" />
             )}
           </Button>
           <Select disabled={check} value={label} onValueChange={onLabelChange}>
@@ -185,25 +185,25 @@ export default function Item({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="RED">
-                <div className="w-6 h-4 rounded-full bg-red-500" />
+                <div className="sm:w-6 sm:h-4 w-4 h-3 rounded-full bg-red-500" />
               </SelectItem>
               <SelectItem value="ORANGE">
-                <div className="w-6 h-4 rounded-full bg-orange-500" />
+                <div className="sm:w-6 sm:h-4 w-4 h-3 rounded-full bg-orange-500" />
               </SelectItem>
               <SelectItem value="YELLOW">
-                <div className="w-6 h-4 rounded-full bg-yellow-500" />
+                <div className="sm:w-6 sm:h-4 w-4 h-3 rounded-full bg-yellow-500" />
               </SelectItem>
               <SelectItem value="GREEN">
-                <div className="w-6 h-4 rounded-full bg-green-500" />
+                <div className="sm:w-6 sm:h-4 w-4 h-3 rounded-full bg-green-500" />
               </SelectItem>
               <SelectItem value="BLUE">
-                <div className="w-6 h-4 rounded-full bg-blue-500" />
+                <div className="sm:w-6 sm:h-4 w-4 h-3 rounded-full bg-blue-500" />
               </SelectItem>
               <SelectItem value="PURPLE">
-                <div className="w-6 h-4 rounded-full bg-purple-500" />
+                <div className="sm:w-6 sm:h-4 w-4 h-3 rounded-full bg-purple-500" />
               </SelectItem>
               <SelectItem value="PINK">
-                <div className="w-6 h-4 rounded-full bg-pink-500" />
+                <div className="sm:w-6 sm:h-4 w-4 h-3 rounded-full bg-pink-500" />
               </SelectItem>
             </SelectContent>
           </Select>
