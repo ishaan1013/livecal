@@ -11,6 +11,7 @@ import { useUser } from "@clerk/nextjs";
 import Avatar from "./avatar";
 import { Date, Task } from "@prisma/client";
 import { getUserLabel } from "@/lib/utils";
+import { Badge } from "../ui/badge";
 
 type Empty = {
   modal?: boolean;
@@ -35,7 +36,7 @@ export default function EditorWrapper(props: Empty | Props) {
   const { modal, dateString, empty, children } = props;
 
   const {
-    liveblocks: { enterRoom, leaveRoom },
+    liveblocks: { enterRoom, leaveRoom, others, status },
   } = useStore();
 
   const setUserData = useStore((state) => state.setUserData);
@@ -70,8 +71,6 @@ export default function EditorWrapper(props: Empty | Props) {
       leaveRoom(props.roomId);
     };
   }, [enterRoom, leaveRoom, user]);
-
-  const others = useStore((state) => state.liveblocks.others);
 
   return (
     <>
@@ -108,6 +107,23 @@ export default function EditorWrapper(props: Empty | Props) {
           })}
         {/* <div className="text-xs text-green-900">{JSON.stringify(others)}</div> */}
       </div>
+
+      {!empty && props.org ? (
+        <div className="flex mt-2 w-full space-x-1 items-center">
+          {status ? (
+            <Badge variant="outline">
+              Status: {status.charAt(0).toUpperCase() + status.slice(1)}
+            </Badge>
+          ) : null}
+          <Badge className="flex items-center" variant="outline">
+            <div className="w-2 h-2 relative mr-1.5">
+              <div className="w-2 h-2 bg-green-500/75 animate-ping rounded-full absolute top-0 left-0"></div>
+              <div className="w-2 h-2 bg-green-500 rounded-full absolute top-0 left-0"></div>
+            </div>
+            {others ? others.length + 1 : 1} Active
+          </Badge>
+        </div>
+      ) : null}
 
       <div className="w-full space-y-2 max-w-screen-sm mt-6">{children}</div>
     </>

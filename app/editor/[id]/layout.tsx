@@ -6,6 +6,9 @@ import { auth } from "@clerk/nextjs";
 // import { ChevronLeft } from "lucide-react";
 // import Link from "next/link";
 
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
+
 export default async function EditorLayout({
   params,
   children,
@@ -47,16 +50,34 @@ export default async function EditorLayout({
   });
 
   return (
-    <div className="w-screen min-h-screen p-8 bg-muted flex-grow flex items-center flex-col">
-      <EditorWrapper
-        roomId={viewId}
-        empty={false}
-        data={dateData}
-        org={user.orgId ? true : false}
-        dateString={dateString}
-      >
-        {children}
-      </EditorWrapper>
-    </div>
+    <main className="w-screen min-h-screen flex flex-col">
+      <div className="bg-background w-screen flex items-center justify-between px-8 py-2">
+        <div className="flex items-center">
+          <Link
+            href="/dashboard"
+            className="hover:opacity-50 transition-all text-xl font-semibold"
+          >
+            LiveCal
+          </Link>
+          <div className="mx-4 text-2xl text-muted-foreground">/</div>
+          <div className="pt-1.5">
+            <OrganizationSwitcher />
+          </div>
+        </div>
+        <UserButton />
+      </div>
+
+      <div className="w-full p-8 bg-muted flex-grow flex items-center flex-col">
+        <EditorWrapper
+          roomId={viewId}
+          empty={false}
+          data={dateData}
+          org={user.orgId ? true : false}
+          dateString={dateString}
+        >
+          {children}
+        </EditorWrapper>
+      </div>
+    </main>
   );
 }
