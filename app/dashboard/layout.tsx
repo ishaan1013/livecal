@@ -26,7 +26,7 @@ export default function DashboardLayout({
               <OrganizationSwitcher />
             </div>
           </div>
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
         </div>
         {children}
       </main>

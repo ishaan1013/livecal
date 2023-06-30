@@ -66,7 +66,7 @@ export default async function EditorLayout({
             <OrganizationSwitcher />
           </div>
         </div>
-        <UserButton />
+        <UserButton afterSignOutUrl="/" />
       </div>
 
       <div className="w-full p-8 bg-muted flex-grow flex items-center flex-col">
