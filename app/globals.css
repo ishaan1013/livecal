@@ -6,6 +6,9 @@ html,
 body {
   overflow-x: hidden;
   color-scheme: dark;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 @layer base {
   :root {

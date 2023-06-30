@@ -5,6 +5,8 @@ import Calendar from "@/components/calendar/calendar";
 import DateSelect from "@/components/calendar/dateSelect";
 import { setupView } from "@/lib/data";
 import { auth } from "@clerk/nextjs";
+import { HelpCircle } from "lucide-react";
+import HelpButton from "@/components/calendar/helpButton";
 
 // import prisma from "@/prisma";
 
@@ -16,7 +18,7 @@ export default async function Dashboard({
   const { month, year } = params;
 
   const user = auth();
-  const org = user.orgId;
+  // const org = user.orgId;
 
   validateRoute(params);
 
@@ -24,8 +26,10 @@ export default async function Dashboard({
 
   return (
     <div className="w-screen md:px-8 xs:px-5 px-3 md:py-8 xs:py-6 py-5 bg-muted flex-grow flex flex-col">
-      <div className="flex w-full justify-start items-center">
+      <div className="flex w-full justify-between items-center">
         <DateSelect month={parseInt(month)} year={parseInt(year)} />
+
+        <HelpButton />
       </div>
 
       {/* <pre className="whitespace-pre">{JSON.stringify(view)} prisma</pre> */}
