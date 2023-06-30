@@ -42,7 +42,7 @@ export default function DateBox(props: emptyT | dayT) {
       href={`editor/${year}-${month.toString().padStart(2, "0")}-${day
         .toString()
         .padStart(2, "0")}`}
-      className="w-full h-full flex flex-col duration-150 group cursor-pointer justify-between hover:bg-neutral-950 items-start bg-background md:p-2 sm:p-1.5 xs:p-1 p-0.5"
+      className="w-full h-full flex flex-col duration-150 group cursor-pointer justify-between hover:bg-[#070707] items-start bg-background md:p-2 sm:p-1.5 xs:p-1 p-0.5"
     >
       <div className="text-center font-medium mb-3 duration-150 group-hover:text-neutral-400 text-neutral-600 text-sm">
         {day}
