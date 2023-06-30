@@ -23,7 +23,7 @@ export default function Avatar(props: Props) {
     <div className={colorStyle[color]}>
       {/* <div className="text-xs">{src}</div> */}
       <Image
-        className="rounded-full overflow-hidden"
+        className="rounded-full aspect-square overflow-hidden"
         src={src}
         alt={name + " avatar"}
         width={36}
