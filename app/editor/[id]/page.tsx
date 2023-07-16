@@ -1,7 +1,5 @@
 import AddButton from "@/components/editor/addButton";
 import Items from "@/components/editor/items";
-import { setupDate, setupView } from "@/lib/data";
-import { auth } from "@clerk/nextjs";
 
 export default async function Editor({ params }: { params: { id: string } }) {
   const { id } = params;

@@ -1,9 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma";
-import {
-  SignedInAuthObject,
-  SignedOutAuthObject,
-} from "@clerk/nextjs/dist/server";
+import { SignedInAuthObject, SignedOutAuthObject } from "@clerk/nextjs/dist/types/server";
 
 export const setupView = async (params: {
   month: string;

@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-// import { auth } from "@clerk/nextjs";
 
 import Calendar from "@/components/calendar/calendar";
 import DateSelect from "@/components/calendar/dateSelect";
