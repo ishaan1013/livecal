@@ -58,7 +58,7 @@ export default function EditorWrapper(props: Empty | Props) {
     setUserData({
       id: user.id,
       name: user.fullName,
-      image: user.profileImageUrl,
+      image: user.imageUrl,
       label: getUserLabel(user.fullName ?? ""),
     });
 
